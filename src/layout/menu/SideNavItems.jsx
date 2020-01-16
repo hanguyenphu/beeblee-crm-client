@@ -17,7 +17,7 @@ function mapDispatchToProps(dispatch) {
 class SideNavItems extends Component {
     handleLogout = e => {
         e.preventDefault()
-        
+
         this.props.logout()
     };
 
@@ -31,7 +31,8 @@ class SideNavItems extends Component {
                         <SideNavItem
                             user={{
                                 background:
-                                    "../img/jeremy-bishop-BuQ-jgeexaQ-unsplash.jpg",
+                                    "https://source.unsplash.com/random/300x112",
+                                    // "../img/gaelle-marcel-bay4zMs4zTc-unsplash.jpg",
                                 email: user.email,
                                 name: user.name
                             }}
@@ -40,7 +41,7 @@ class SideNavItems extends Component {
                         <SideNavItem
                             href='/projects'
                             icon='assignment_turned_in'
-                           
+
                         >
                             Projects
                         </SideNavItem>

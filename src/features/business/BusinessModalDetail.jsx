@@ -50,11 +50,12 @@ class BusinessModalDetail extends Component {
         API
             .get(`businesses/${id}`)
             .then(response => {
-                if (response.data.businesses) {
+                if (response.data.business) {
+
                     this.setState({
                         ...this.state,
-                        contacts: response.data.businesses.contacts,
-                        province: response.data.businesses.province,
+                        contacts: response.data.business.contacts,
+                        province: response.data.business.province,
                         loading: false
                     });
                 }
@@ -69,7 +70,7 @@ class BusinessModalDetail extends Component {
 
     handleChangeBusiness = e => {
         const field = e.target.name
-        let value = e.target.value 
+        let value = e.target.value
         if(field === "phone") {
             value = formatPhone(value)
         }
@@ -101,7 +102,7 @@ class BusinessModalDetail extends Component {
             //Update the data in the parent component
           this.props.updateData()
           this.setState({
-              ...this.state, 
+              ...this.state,
               successMessage: 'Save successfully!',
               loading: false
           })
@@ -170,10 +171,10 @@ class BusinessModalDetail extends Component {
         })
     }
 
-   
+
 
     render() {
-       
+
         const contacts = this.state.contacts || [];
         if(!this.state.business) {
             return <Loading/>
@@ -259,13 +260,13 @@ class BusinessModalDetail extends Component {
                         {this.state.errorMessage && <Row>
                             <p className="red-text">{this.state.errorMessage}</p>
                         </Row>}
-                        
+
                         <Row>
                             <h5>Contacts </h5>
                              <ContactForm business={business} addMoreContactToTable={this.addMoreContactToTable}/>
                         </Row>
                         <ContactTable contacts={contacts} business={business}/>
-                        
+
                     </div>
                 ) : (
                     <Loading />

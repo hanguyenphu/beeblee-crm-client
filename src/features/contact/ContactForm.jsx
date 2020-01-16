@@ -54,7 +54,7 @@ class ContactForm extends Component {
             successMessage: "",
             errorMessage: ""
         });
-       
+
         const field = e.target.name;
         let value = e.target.value;
 
