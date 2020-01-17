@@ -32,6 +32,10 @@ class Login extends Component {
     handleSubmit = e => {
         e.preventDefault();
         const { email, password } = this.state;
+        this.setState({
+            ...this.state,
+            errorMessage:""
+        })
         API
             .post(`users/login`, {
                 email,
@@ -64,7 +68,7 @@ class Login extends Component {
                     padding: "20px",
                     boxShadow: "1px 1px 1px #9E9E9E",
                     borderRadius: "7px",
-                    
+
                 }}
             >
                 <Row>
@@ -74,7 +78,7 @@ class Login extends Component {
                     </Col>
                     <Col m={5} x={5} l={5}></Col>
                 </Row>
-                <Row>
+                <Row className="animated bounceInRight" >
                     <form onSubmit={this.handleSubmit}>
                         <TextInput
                             m={12}
@@ -102,12 +106,7 @@ class Login extends Component {
                             onChange={this.handleChange}
                         />
 
-                        {errorMessage && (
-                            <div className='red-text text-accent-2'>
-                                {errorMessage}
-                            </div>
-                        )}
-                        <br />
+
                         {!loading ? (
                             <Button node='button' waves='light' className="gradient-btn btn-blue">
                                 Login
@@ -117,6 +116,12 @@ class Login extends Component {
                             <Loading />
                         )}
                     </form>
+                    {errorMessage && (
+                            <div className='red-text text-accent-2 animated shake'>
+                                <p className='animated bounceOutLeft delay-2s' > {errorMessage}</p>
+                            </div>
+                        )}
+                        <br />
                 </Row>
             </div>
         );

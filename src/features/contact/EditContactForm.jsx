@@ -57,14 +57,18 @@ class EditContactForm extends Component {
         });
     };
 
+    handleCancel = () => {
+        this.props.closeEditContact()
+    }
+
     render() {
         if (!this.state.contact) {
             return <Loading />;
         }
         const { contact, edited } = this.state;
-        
+
         return (
-            <div>
+            <div className="animated bounceInLeft ">
                 <form onSubmit={this.handleUpdateContact}>
                     <Row>
                         <TextInput
@@ -91,9 +95,9 @@ class EditContactForm extends Component {
                         />
                         <TextInput
                             s={12}
-                            l={6}
-                            m={4}
-                            xl={4}
+                            l={3}
+                            m={3}
+                            xl={3}
                             label='Email'
                             email
                             validate
@@ -102,6 +106,10 @@ class EditContactForm extends Component {
                             onChange={this.handleInputChange}
                         />
                         <Button
+
+                            l={1}
+                            m={1}
+                            xl={1}
                             node='button'
                             type='submit'
                             waves='light'
@@ -111,6 +119,20 @@ class EditContactForm extends Component {
                         >
                             Save
                             <Icon left>save</Icon>
+                        </Button>
+                        <Button
+                            l={1}
+                            m={1}
+                            xl={1}
+                            node='button'
+                            type='reset'
+                            waves='light'
+                            style={{ marginTop: "20px", marginLeft:"10px" }}
+                            onClick={this.handleCancel}
+                            className='gradient-btn btn-white'
+                        >
+                            Cancel
+
                         </Button>
                     </Row>
                 </form>

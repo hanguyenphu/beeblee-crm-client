@@ -9,7 +9,7 @@ function mapStateToProps(state) {
 
 class ProvinceDropdown extends Component {
   render() {
-    const { provinces } = this.props;
+    const { provinces, province } = this.props;
     return (
       <Select
         options={{
@@ -30,7 +30,7 @@ class ProvinceDropdown extends Component {
             outDuration: 250
           }
         }}
-        value=""
+        value={province}
         name="province"
         onChange={this.props.handleChange}
 

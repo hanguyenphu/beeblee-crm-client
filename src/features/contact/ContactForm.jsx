@@ -114,8 +114,8 @@ class ContactForm extends Component {
 
         return (
             <div>
-                <form onSubmit={this.handleCreateContact}>
-                    <Row>
+                <form onSubmit={this.handleCreateContact} >
+                    <Row >
                         <TextInput
                             s={12}
                             l={2}
@@ -170,7 +170,7 @@ class ContactForm extends Component {
                     </Row>
 
                     {this.state.dublicated && (
-                        <Row>
+                        <Row className="animated jello">
                             <h6 className='red-text'>
                                 A contact has been found with this phone number
                             </h6>

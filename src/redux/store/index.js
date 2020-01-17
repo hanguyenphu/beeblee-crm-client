@@ -37,6 +37,15 @@ function loadFromLocalStorage() {
 //User Data load from localStorage
 const persistedState = loadFromLocalStorage();
 
+
+
+// export const configureStore = () => {
+//     const store = createStore(rootReducer,  persistedState,
+//         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+
+//     return store;
+// }
+
 const store = createStore(
     rootReducer,
     persistedState,
@@ -44,4 +53,5 @@ const store = createStore(
 );
 
 store.subscribe(() => saveToLocalStorage(store.getState().user));
-export default store;
+
+export default store

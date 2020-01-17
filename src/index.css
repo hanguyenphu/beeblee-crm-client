@@ -1,3 +1,4 @@
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -9,7 +10,7 @@ body {
 }
 
 code {
- 
+
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
@@ -62,4 +63,12 @@ code {
 
 .gradient-nav{
   background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+}
+
+
+.radius-corner {
+  border-radius: 14px 14px 14px 14px;
+  -moz-border-radius: 14px 14px 14px 14px;
+  -webkit-border-radius: 14px 14px 14px 14px;
+  border: 0px solid #000000;
 }

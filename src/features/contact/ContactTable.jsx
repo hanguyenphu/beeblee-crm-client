@@ -19,7 +19,7 @@ export class ContactTable extends Component {
     }
     componentWillReceiveProps(prevProps) {
         if(prevProps.contacts.length !== this.props.contacts.length) {
-           
+
             this.setState({
                 contacts: this.props.contacts
             })
@@ -29,11 +29,11 @@ export class ContactTable extends Component {
     handleRemoveContact = (contactId) => () => {
         const {business} = this.props
         const confirmed = window.confirm("Do you want to remove this contact from the business?")
-       
+
         if(confirmed) {
-           
+
             API.patch(`businesses/removeContact/${business._id}`, {contactId}).then(response => {
-                let contactIds  = response.data.contacts 
+                let contactIds  = response.data.contacts
                 let contacts = this.state.contacts
                 contacts = contacts.filter(contact => {
                     return contactIds.includes(contact._id)
@@ -68,15 +68,15 @@ export class ContactTable extends Component {
         this.setState({
             contacts
         })
-       
+
     }
     render() {
         const { contacts } = this.state;
 
         return (
-            <Row>
+            <Row >
                 <Col x={12} s={12} l={12} m={12} xl={12}>
-                    <Table x={12} s={12} l={12} m={12} xl={12}>
+                    <Table x={12} s={12} l={12} m={12} xl={12}  className="radius-corner">
                         <thead>
                             <tr>
                                 <th data-field='id'>Name</th>
@@ -96,7 +96,7 @@ export class ContactTable extends Component {
                                             <a href='#'
                                              style={{
                                                 marginRight: "20px",
-                                               
+
                                             }}
                                             onClick={this.handleEditContact(contact)}>
                                                 <Icon>create</Icon>
@@ -104,7 +104,7 @@ export class ContactTable extends Component {
                                             <a
                                                 href='#'
                                                 style={{
-                                                    
+
                                                     color: "red"
                                                 }}
                                                 onClick={this.handleRemoveContact(contact._id)}

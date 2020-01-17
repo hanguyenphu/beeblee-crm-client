@@ -44,7 +44,7 @@ class Profile extends Component {
                 email: user.email,
                 name: user.name,
                 phone: user.phone,
-               
+
             }
         }));
     }
@@ -150,7 +150,7 @@ class Profile extends Component {
         } = this.state;
 
         return (
-            <div>
+            <div >
                 <form
                     onSubmit={this.handleSubmit}
                     style={{
@@ -160,12 +160,12 @@ class Profile extends Component {
                         boxShadow: "1px 1px 1px #9E9E9E"
                     }}
                 >
-                    <h6>User Profile</h6>
+                    <h6 >User Profile</h6>
 
                     {sussess && (
-                        <Row>
+                        <Row >
                             <Col s={12} m={6} l={6} xl={6}>
-                                <p className='green-text '>
+                                <p className='green-text animated bounceInRigh'>
                                     Update Sussessfully{" "}
                                 </p>
                             </Col>
@@ -175,13 +175,13 @@ class Profile extends Component {
                     {errMessage && (
                         <Row>
                             <Col s={12} m={6} l={6} xl={6}>
-                                <p className=' deep-orange-text '>
+                                <p className=' deep-orange-text animated shake '>
                                     {errMessage || ""}
                                 </p>
                             </Col>
                         </Row>
                     )}
-                    <Row>
+                    <Row className="animated bounceInRigh">
                         <Col s={12} m={6} l={6} xl={6}>
                             <TextInput
                                 s={12}

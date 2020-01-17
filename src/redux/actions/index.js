@@ -1,4 +1,4 @@
-import { AUTHENTICATE, LOGOUT, UPDATE_PROFILE, FETCH_PROVINCE, PUSH_BUSINESS_TO_MODAL } from '../constants/action-types'
+import { AUTHENTICATE, LOGOUT, UPDATE_PROFILE, FETCH_PROVINCE, FETCH_BUSINESS } from '../constants/action-types'
 
 export function authenticate(payload) {
     return {type: AUTHENTICATE, payload}
@@ -16,7 +16,7 @@ export function fetch_province(payload) {
     return {type: FETCH_PROVINCE, payload}
 }
 
-export function push_business_to_modal(payload) {
-    return {type: PUSH_BUSINESS_TO_MODAL, payload}
+export function fetch_business(payload) {
+    return {type: FETCH_BUSINESS, payload}
 }
 

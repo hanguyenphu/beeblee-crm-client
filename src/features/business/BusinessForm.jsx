@@ -13,6 +13,15 @@ class BusinessForm extends Component {
   state = {
     business: { name: "", address: "", phone: "", province: "" }
   };
+
+  componentDidMount() {
+    if (this.props.business) {
+      this.setState({
+        business: this.props.business
+      });
+    }
+  }
+
   handleChange = e => {
     const field = e.target.name;
     let value = e.target.value;
@@ -23,50 +32,54 @@ class BusinessForm extends Component {
 
     let business = this.state.business;
     business[field] = value;
-    this.setState(business);
+    this.setState( business);
   };
 
-  handleSubmit = (e) => {
-      e.preventDefault()
-      const {business} = this.state
-      API.post(`businesses`, business).then(response => {
-          this.props.updateData()
-          this.props.closeCreateModal()
-      }).catch(error => {
-          console.log(error)
+  handleSubmit = e => {
+    e.preventDefault();
+    let { business } = this.state;
+
+    if (!business._id) {
+      API.post(`businesses`, business)
+        .then(response => {
+          this.props.updateData();
+          this.props.closeCreateModal();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } else {
+      const _id = business._id
+      const updateBusiness = {
+        name: business.name,
+        phone: business.phone,
+        address: business.address,
+        province: business.province
+      }
+
+      API.patch(`businesses/${_id}`, updateBusiness)
+      .then(response => {
+        //Update the data in the parent component
+        this.props.updateData();
+        this.setState({
+          ...this.state,
+          successMessage: "Save successfully!",
+          loading: false
+        });
       })
-  }
+      .catch(error => {
+        this.setState({
+          errorMessage: "Cannot save the data!",
+          loading: false
+        });
+      });
+    }
+  };
 
   render() {
     const { business } = this.state;
-
     return (
-      <div>
-        <Modal
-          actions={[
-            <Button flat modal="close" node="button" waves="green">
-              Close
-            </Button>
-          ]}
-          bottomSheet={false}
-          fixedFooter={false}
-          header="Create a new business"
-          id="modal-1"
-          open={true}
-          options={{
-            dismissible: true,
-            endingTop: "10%",
-            inDuration: 250,
-            onCloseEnd: this.props.closeCreateModal,
-            onCloseStart: null,
-            onOpenEnd: null,
-            onOpenStart: null,
-            opacity: 0.5,
-            outDuration: 250,
-            preventScrolling: true,
-            startingTop: "4%"
-          }}
-        >
+
           <form onSubmit={this.handleSubmit}>
             <Row>
               <TextInput
@@ -102,7 +115,7 @@ class BusinessForm extends Component {
                 onChange={this.handleChange}
                 required
               />
-              <ProvinceDropdown handleChange={this.handleChange} />
+              <ProvinceDropdown handleChange={this.handleChange} province={business.province} />
             </Row>
             <Row>
               <Button
@@ -110,12 +123,12 @@ class BusinessForm extends Component {
                 className="gradient-btn btn-primary"
                 waves="green"
               >
-                Create
+                Save
               </Button>
             </Row>
           </form>
-        </Modal>
-      </div>
+
+
     );
   }
 }

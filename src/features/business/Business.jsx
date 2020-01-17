@@ -11,14 +11,13 @@ import {
 } from "react-materialize";
 import Loading from "../loading/Loading";
 import axios from "axios";
-import {
-  fetch_province,
-  push_business_to_modal
-} from "../../redux/actions/index";
+import { fetch_province, fetch_business } from "../../redux/actions/index";
 import BusinessModalDetail from "./BusinessModalDetail";
 import API from "../../utils/API/API";
 import formatPhone from "../../utils/commons/FormatPhone";
-import BusinessForm from "./BusinessForm";
+import CreateBusinessModal from "./CreateBusinessModal";
+import { Link } from "react-router-dom";
+
 
 const mapStateToProps = state => {
   return { provinces: state.provinces };
@@ -26,7 +25,8 @@ const mapStateToProps = state => {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addProvinceToRedux: provinces => dispatch(fetch_province(provinces))
+    addProvinceToRedux: provinces => dispatch(fetch_province(provinces)),
+    addBusinessesToRedux: businesses => dispatch(fetch_business(businesses))
   };
 }
 
@@ -61,10 +61,10 @@ class Business extends Component {
   }
 
   getData = () => {
-    const provinceRequest = API.get("provinces");
-    const businessRequest = API.get("businesses");
+    const getProvinceRequest = API.get("provinces");
+    const getBusinessRequest = API.get("businesses");
     axios
-      .all([provinceRequest, businessRequest])
+      .all([getProvinceRequest, getBusinessRequest])
       .then(
         axios.spread((...responses) => {
           const provinces = responses[0].data;
@@ -75,8 +75,9 @@ class Business extends Component {
             businesses,
             loading: false
           });
-          //Save provinces data in redux for later usage
+          //Save data in redux for later usage
           this.props.addProvinceToRedux(provinces);
+          this.props.addBusinessesToRedux(businesses)
         })
       )
       .catch(error => {
@@ -151,15 +152,16 @@ class Business extends Component {
 
   handleCreateModel = () => {
     this.setState({
+      ...this.state,
       openCreateModal: true
     });
   };
 
   closeCreateModal = () => {
-      this.setState({
-        openCreateModal: false
-      })
-  }
+    this.setState({
+      openCreateModal: false
+    });
+  };
 
   render() {
     const { name, phone, province } = this.state.searchBy;
@@ -183,6 +185,7 @@ class Business extends Component {
         <Row style={{ marginTop: "20px" }}></Row>
         <Row>
           <Col>
+
             <h5>
               Businesses{" "}
               <Button
@@ -198,14 +201,14 @@ class Business extends Component {
             </h5>
           </Col>
         </Row>
-        <Row
+        <Row  className=" radius-corner"
           style={{
             backgroundColor: "white",
             padding: "20px",
             boxShadow: "1px 1px 1px #9E9E9E"
           }}
         >
-          <form>
+          <form >
             <h6>Filter by</h6>
             <Col s={12} m={12} l={12} xl={12}>
               <TextInput
@@ -218,6 +221,7 @@ class Business extends Component {
                 value={name}
                 onChange={this.handleInputChange}
               />
+
               <TextInput
                 s={12}
                 l={3}
@@ -228,6 +232,7 @@ class Business extends Component {
                 value={phone}
                 onChange={this.handleInputChange}
               />
+
               <Select
                 onChange={this.handleInputChange}
                 options={{
@@ -295,7 +300,7 @@ class Business extends Component {
             </Col>
           </form>
         </Row>
-        <Row
+        <Row className="animated bounceInUp radius-corner"
           style={{
             backgroundColor: "white",
             padding: "20px",
@@ -317,7 +322,9 @@ class Business extends Component {
                   businesses.map(business => {
                     return (
                       <tr key={business._id}>
-                        <td>{business.name}</td>
+                        <td>
+                          <Link to={'/businesses/' + business._id}>{business.name}</Link>
+                        </td>
                         <td>{business.phone}</td>
                         <td>{this.getProvinceName(business.province)}</td>
                         <td>
@@ -351,7 +358,14 @@ class Business extends Component {
           )}
         </div>
 
-        <div>{openCreateModal && <BusinessForm closeCreateModal={this.closeCreateModal}  updateData={this.getData}/>}</div>
+        <div>
+          {openCreateModal && (
+            <CreateBusinessModal
+              closeCreateModal={this.closeCreateModal}
+              updateData={this.getData}
+            />
+          )}
+        </div>
       </div>
     );
   }

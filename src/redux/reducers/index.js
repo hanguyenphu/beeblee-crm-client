@@ -2,8 +2,8 @@ import {
     AUTHENTICATE,
     LOGOUT,
     UPDATE_PROFILE,
-    FETCH_PROVINCE, 
-    PUSH_BUSINESS_TO_MODAL
+    FETCH_PROVINCE,
+    FETCH_BUSINESS
 } from "../constants/action-types";
 import axios from "axios";
 import API from "../../utils/API/API";
@@ -12,9 +12,7 @@ import API from "../../utils/API/API";
 const initialState = {
     user: {
         authenticated: false
-    },
-    business: {}
-
+    }
 };
 
 function rootReducer(state = initialState, action) {
@@ -24,7 +22,7 @@ function rootReducer(state = initialState, action) {
             const token = localStorage.getItem("token");
             API.defaults.baseURL = 'http://localhost:3000/'
             API.defaults.headers.common= {'Authorization': `Bearer ${token}`}
-            
+
             return Object.assign({}, state, {
                 user: {
                     authenticated: action.payload.authenticated,
@@ -54,9 +52,9 @@ function rootReducer(state = initialState, action) {
         })
     }
 
-    if(action.type === PUSH_BUSINESS_TO_MODAL) {
+    if(action.type === FETCH_BUSINESS) {
         return Object.assign({}, state, {
-            business: action.payload
+            businesses: action.payload
         })
     }
 

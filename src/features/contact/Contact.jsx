@@ -38,14 +38,14 @@ class Contact extends Component {
             <h5>Contact List</h5>
           </Col>
         </Row>
-        <Row
+        <Row className="animated fadeInDown radius-corner"
           style={{
             backgroundColor: "white",
             padding: "20px",
             boxShadow: "1px 1px 1px #9E9E9E"
           }}
         >
-          <Table>
+          <Table >
             <thead>
               <tr>
                 <th data-field="name">Name</th>
