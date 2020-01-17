@@ -8,6 +8,7 @@ import { ContactTable } from "../contact/ContactTable";
 import API from "../../utils/API/API";
 import formatPhone from "../../utils/commons/FormatPhone";
 import ProvinceDropdown from "../common/ProvinceDropdown";
+import BusinessForm from "./BusinessForm";
 
 
 
@@ -125,7 +126,7 @@ class BusinessModalDetail extends Component {
     if (!this.state.business) {
       return <Loading />;
     }
-    const { business, edited } = this.state;
+    const { business } = this.state;
     return (
       <Modal
         actions={[
@@ -156,75 +157,9 @@ class BusinessModalDetail extends Component {
       >
         {!this.state.loading ? (
           <div>
-            <form onSubmit={this.updateBusiness} >
 
+            <BusinessForm business={business} updateData={this.props.updateData}/>
 
-
-              <Row >
-                <TextInput
-                  s={12}
-                  l={6}
-                  m={6}
-                  xl={6}
-                  label="Name:"
-                  value={business.name}
-                  name="name"
-                  onChange={this.handleChangeBusiness}
-                  required
-                />
-                <TextInput
-                  s={12}
-                  l={6}
-                  m={6}
-                  xl={6}
-                  label="Address"
-                  name="address"
-                  value={business.address}
-                  onChange={this.handleChangeBusiness}
-                  required
-                />
-                <TextInput
-                  s={12}
-                  l={6}
-                  m={6}
-                  xl={6}
-                  label="Phone:"
-                  name="phone"
-                  value={business.phone}
-                  onChange={this.handleChangeBusiness}
-                  required
-                />
-                <ProvinceDropdown
-                  handleChange={this.handleChangeBusiness}
-                  province={business.province}
-                />
-              </Row>
-
-              <Row>
-                <Button
-                  node="button"
-                  className={edited ? "gradient-btn btn-primary " : ""}
-                  waves="green"
-                  disabled={!edited}
-                >
-                  Update
-                </Button>
-              </Row>
-            </form>
-            {this.state.successMessage && (
-              <Row className='animated shake'>
-                <p className="green-text animated bounceOutLeft delay-3s">
-                  {this.state.successMessage}
-                </p>
-              </Row>
-            )}
-            {this.state.errorMessage && (
-              <Row className='animated rubberBand'>
-                <p className="red-text animated bounceOutLeft delay-3s ">
-                  {this.state.errorMessage}
-                </p>
-              </Row>
-            )}
 
             <Row >
               <h5>Contacts </h5>

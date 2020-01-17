@@ -300,7 +300,7 @@ class Business extends Component {
             </Col>
           </form>
         </Row>
-        <Row className="animated bounceInUp radius-corner"
+        <Row className="animated fadeInUp radius-corner"
           style={{
             backgroundColor: "white",
             padding: "20px",

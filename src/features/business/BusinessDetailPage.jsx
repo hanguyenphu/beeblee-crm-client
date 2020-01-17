@@ -4,9 +4,17 @@ import API from "../../utils/API/API";
 import Loading from "../loading/Loading";
 import { Row } from "react-materialize";
 import BusinessForm from "./BusinessForm";
+import { Redirect } from "react-router-dom";
 function mapStateToProps(state, ownProps) {
   const businessId = ownProps.match.params.id;
   let business = {};
+
+  if(!state.businesses){
+       ownProps.history.push('/businesses')
+       return {
+
+       }
+  }
 
   if (businessId && state.businesses.length > 0) {
     business = state.businesses.filter(
@@ -25,6 +33,11 @@ class BusinessDetailPage extends Component {
     errorMessage: "",
     business: {}
   };
+
+
+  updateData = () => {
+
+  }
   componentDidMount() {
     if (this.props.business) {
       this.setState({
@@ -73,7 +86,7 @@ class BusinessDetailPage extends Component {
             boxShadow: "1px 1px 1px #9E9E9E"
           }}
         >
-          <BusinessForm business={business} />
+          <BusinessForm business={business} updateData={this.updateData}/>
         </Row>
       </div>
     );

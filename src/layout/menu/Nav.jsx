@@ -2,9 +2,9 @@ import React, { Component } from "react"
 
 import {
     Navbar,
-   
+
     Icon,
-   
+
 } from "react-materialize"
 import SideMenu from "./SideMenu"
 import SideNavItems from './SideNavItems'
@@ -17,7 +17,7 @@ class Nav extends Component {
             <Navbar
                 alignLinks='left'
                 className="gradient-nav"
-               
+                fixed={true}
                 brand={
                     <a   className='brand-logo center' href='#'>
                         Beeblee
