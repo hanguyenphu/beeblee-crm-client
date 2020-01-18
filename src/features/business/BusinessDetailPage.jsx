@@ -4,7 +4,8 @@ import API from "../../utils/API/API";
 import Loading from "../loading/Loading";
 import { Row } from "react-materialize";
 import BusinessForm from "./BusinessForm";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
+import Icon from "react-materialize/lib/Icon";
 function mapStateToProps(state, ownProps) {
   const businessId = ownProps.match.params.id;
   let business = {};
@@ -74,7 +75,9 @@ class BusinessDetailPage extends Component {
 
     return (
       <div>
-        <Row style={{ marginTop: "20px" }}></Row>
+        <Row style={{ marginTop: "20px",  }}>
+            <Link to="/businesses" style={{display: "inline-flex", verticalAlign: "middle"}} ><Icon >arrow_back</Icon> Back </Link>
+        </Row>
         <Row>
           <h5>{business.name}</h5>
         </Row>

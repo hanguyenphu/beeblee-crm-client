@@ -151,13 +151,14 @@ class Profile extends Component {
 
         return (
             <div >
-                <form
+                <form className="radius-corner"
                     onSubmit={this.handleSubmit}
                     style={{
                         backgroundColor: "white",
                         marginTop: "30px",
                         padding: "30px",
-                        boxShadow: "1px 1px 1px #9E9E9E"
+                        boxShadow: "1px 1px 1px #9E9E9E",
+                        marginBottom: "20px"
                     }}
                 >
                     <h6 >User Profile</h6>
@@ -226,7 +227,7 @@ class Profile extends Component {
                         </Button>
                     </Row>
                 </form>
-                <form
+                <form className="radius-corner"
                     onSubmit={this.handleSubmitNewPassword}
                     style={{
                         backgroundColor: "white",
