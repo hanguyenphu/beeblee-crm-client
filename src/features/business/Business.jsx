@@ -7,7 +7,8 @@ import {
   TextInput,
   Select,
   Icon,
-  Button
+  Button,
+  Pagination
 } from "react-materialize";
 import Loading from "../loading/Loading";
 import axios from "axios";
@@ -17,7 +18,7 @@ import API from "../../utils/API/API";
 import formatPhone from "../../utils/commons/FormatPhone";
 import CreateBusinessModal from "./CreateBusinessModal";
 import { Link } from "react-router-dom";
-
+import ProvinceDropdown from "../common/ProvinceDropdown";
 
 const mapStateToProps = state => {
   return { provinces: state.provinces };
@@ -42,7 +43,8 @@ class Business extends Component {
       provinces: [],
       loading: true,
       search: false,
-      openCreateModal: false
+      openCreateModal: false,
+      currentPage: 1
     };
   }
 
@@ -60,24 +62,50 @@ class Business extends Component {
     return results;
   }
 
+  getDataForPagination = pageNumber => {
+    API.get(`businesses?pageNo=${pageNumber}`)
+      .then(response => {
+        this.setState({
+          ...this.state,
+          businesses: response.data.businesses,
+          businessCount: response.data.count
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   getData = () => {
     const getProvinceRequest = API.get("provinces");
-    const getBusinessRequest = API.get("businesses");
+    const getBusinessRequest = API.get("businesses?pageNo=1");
+
+    //This API get all businesses and add to redux
+    API(`/search/businesses`)
+      .then(response => {
+        this.props.addBusinessesToRedux(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //APT get all businesses with page Number and provinces
     axios
       .all([getProvinceRequest, getBusinessRequest])
       .then(
         axios.spread((...responses) => {
           const provinces = responses[0].data;
-          const businesses = responses[1].data;
+          const businesses = responses[1].data.businesses;
+          const businessCount = responses[1].data.count;
 
           this.setState({
             provinces,
             businesses,
+            businessCount,
             loading: false
           });
           //Save data in redux for later usage
           this.props.addProvinceToRedux(provinces);
-          this.props.addBusinessesToRedux(businesses)
         })
       )
       .catch(error => {
@@ -116,29 +144,38 @@ class Business extends Component {
     });
   };
 
+  //Client side search only
+  //this function get all businesses from server by calling api /search/businesses
+  //then filter the options on Client side
   handleFilter = e => {
     e.preventDefault();
+    let businesses = [];
+    API.get("/search/businesses")
+      .then(response => {
+        businesses = response.data;
 
-    let businesses = this.state.businesses;
-    const fields = Object.keys(this.state.searchBy);
-    fields.forEach(field => {
-      businesses = this.filterByField(
-        this.state.searchBy[field],
-        field,
-        businesses
-      );
-    });
+        const fields = Object.keys(this.state.searchBy);
+        fields.forEach(field => {
+          businesses = this.filterByField(
+            this.state.searchBy[field],
+            field,
+            businesses
+          );
+        });
 
-    this.setState({
-      ...this.state,
-      search: true,
-      results: businesses
-    });
+        this.setState({
+          ...this.state,
+          search: true,
+          results: businesses
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   handleResetFilter = e => {
     e.preventDefault();
-
     this.setState({
       ...this.state,
       searchBy: {
@@ -170,7 +207,9 @@ class Business extends Component {
       provinces,
       business,
       search,
-      openCreateModal
+      openCreateModal,
+      businessCount,
+      currentPage
     } = this.state;
 
     if (loading) {
@@ -185,7 +224,6 @@ class Business extends Component {
         <Row style={{ marginTop: "20px" }}></Row>
         <Row>
           <Col>
-
             <h5>
               Businesses{" "}
               <Button
@@ -201,14 +239,15 @@ class Business extends Component {
             </h5>
           </Col>
         </Row>
-        <Row  className=" radius-corner"
+        <Row
+          className=" radius-corner"
           style={{
             backgroundColor: "white",
             padding: "20px",
             boxShadow: "1px 1px 1px #9E9E9E"
           }}
         >
-          <form >
+          <form>
             <h6>Filter by</h6>
             <Col s={12} m={12} l={12} xl={12}>
               <TextInput
@@ -300,7 +339,8 @@ class Business extends Component {
             </Col>
           </form>
         </Row>
-        <Row className="animated fadeInUp radius-corner"
+        <Row
+          className="animated fadeIn radius-corner"
           style={{
             backgroundColor: "white",
             padding: "20px",
@@ -308,6 +348,18 @@ class Business extends Component {
           }}
         >
           <Col s={12} m={12} l={12} xl={12} style={{ marginTop: "50px" }}>
+            <Row style={{ margin: "0px auto", textAlign: "center" }}>
+              <Pagination
+                activePage={currentPage}
+                items={businessCount / 5 + 1}
+                leftBtn={<Icon>chevron_left</Icon>}
+                maxButtons={3}
+                rightBtn={<Icon>chevron_right</Icon>}
+                onSelect={pageNumber => {
+                  this.getDataForPagination(pageNumber);
+                }}
+              />
+            </Row>
             <Table>
               <thead>
                 <tr>
@@ -323,7 +375,9 @@ class Business extends Component {
                     return (
                       <tr key={business._id}>
                         <td>
-                          <Link to={'/businesses/' + business._id}>{business.name}</Link>
+                          <Link to={"/businesses/" + business._id}>
+                            {business.name}
+                          </Link>
                         </td>
                         <td>{business.phone}</td>
                         <td>{this.getProvinceName(business.province)}</td>

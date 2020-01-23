@@ -115,7 +115,7 @@ class BusinessForm extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <Row className="animated fadeInUp">
+          <Row className="">
             <TextInput
               s={12}
               l={6}

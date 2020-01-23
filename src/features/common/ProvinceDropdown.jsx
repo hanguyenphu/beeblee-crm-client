@@ -7,9 +7,12 @@ function mapStateToProps(state) {
   };
 }
 
+// Display province drop down, with a props called handleChange
 class ProvinceDropdown extends Component {
+
   render() {
     const { provinces, province } = this.props;
+
     return (
       <Select
         options={{
@@ -33,7 +36,6 @@ class ProvinceDropdown extends Component {
         value={province}
         name="province"
         onChange={this.props.handleChange}
-
       >
         <option disabled value="">
           Select Province

@@ -2,85 +2,102 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import API from "../../utils/API/API";
 import Loading from "../loading/Loading";
-import { Row } from "react-materialize";
-import BusinessForm from "./BusinessForm";
-import { Redirect, Link } from "react-router-dom";
-import Icon from "react-materialize/lib/Icon";
+import { Row, Button, Icon } from "react-materialize";
+import CreateProjectModal from "../projects/CreateProjectModal";
+import ProjectTable from "../projects/ProjectTable";
+
 function mapStateToProps(state, ownProps) {
-  const businessId = ownProps.match.params.id;
-  let business = {};
-
-  if(!state.businesses){
-       ownProps.history.push('/businesses')
-       return {
-
-       }
-  }
-
-  if (businessId && state.businesses.length > 0) {
-    business = state.businesses.filter(
-      business => business._id === businessId
-    )[0];
-  }
-
-  return {
-    business
-  };
+  return {};
 }
 
 class BusinessDetailPage extends Component {
   state = {
     loading: true,
     errorMessage: "",
-    business: {}
+    business: {},
+    openCreateProjectModal: false,
+    projects: []
   };
 
 
-  updateData = () => {
+  updateData = () => {};
 
-  }
-  componentDidMount() {
-    if (this.props.business) {
+  getBusinessData = () => {
+    const businessId = this.props.match.params.id;
+    API.get(`/businesses/${businessId}`).then(response => {
+      const projects = response.data.business.projects;
       this.setState({
-        business: this.props.business,
-        loading: false,
-        errorMessage: ""
-      });
-    }
+        ...this.state,
+        projects,
+        business: response.data.business,
+        loading: false
+      })
+    }).catch(error => {
+      this.props.history.push("/businesses")
+    })
+  }
 
-    // const businessId = this.props.match.params.id;
-    // API.get(`businesses/${businessId}`)
-    //   .then(response => {
-    //     this.setState({
-    //       ...this.state,
-    //       business: response.data.business,
-    //       loading: false,
-    //       errorMessage: ""
-    //     });
-    //   })
-    //   .catch(error => {
-    //     this.setState({
-    //       business: {},
-    //       loading: false,
-    //       errorMessage: "Cannot fetch the business"
-    //     });
-    //   });
+  componentDidMount() {
+    if (this.props.match.params.id) {
+      this.getBusinessData()
+    }
+  }
+
+
+  handleOpenCreateProjectModel = () => {
+    this.setState({
+      ...this.state,
+      openCreateProjectModal: true
+    });
+  };
+
+  closeCreateProjectModal = () => {
+    this.setState({
+      ...this.state,
+      openCreateProjectModal: false
+    });
+  };
+
+
+
+
+
+  handleGoBack = () => {
+    this.props.history.push('/businesses')
   }
   render() {
-    const { business, errorMessage, loading } = this.state;
+    const { loading } = this.state;
 
     if (loading) {
       return <Loading />;
     }
+    const { business, openCreateProjectModal, projects } = this.state;
+
 
     return (
       <div>
-        <Row style={{ marginTop: "20px",  }}>
-            <Link to="/businesses" style={{display: "inline-flex", verticalAlign: "middle"}} ><Icon >arrow_back</Icon> Back </Link>
+        <Row style={{ marginTop: "20px" }}>
+          <Button node="button" type="submit" waves="light" className="gradient-btn btn-white" onClick={this.handleGoBack}>
+            Go Back
+            <Icon left>arrow_back</Icon>
+          </Button>
         </Row>
         <Row>
-          <h5>{business.name}</h5>
+          <h5>
+            {business.name}{" "}
+            <Button
+              node="button"
+              type="submit"
+              waves="light"
+              className="gradient-btn btn-red"
+              onClick={this.handleOpenCreateProjectModel}
+            >
+              Create New Project
+              <Icon left>add_box</Icon>
+            </Button>
+          </h5>
         </Row>
+
         <Row
           className=" radius-corner"
           style={{
@@ -89,8 +106,16 @@ class BusinessDetailPage extends Component {
             boxShadow: "1px 1px 1px #9E9E9E"
           }}
         >
-          <BusinessForm business={business} updateData={this.updateData}/>
+          {projects && <ProjectTable business={business} projects={projects} />}
         </Row>
+
+        {openCreateProjectModal && (
+          <CreateProjectModal
+            closeCreateProjectModal={this.closeCreateProjectModal}
+            business={business}
+            getBusinessData={this.getBusinessData}
+          />
+        )}
       </div>
     );
   }

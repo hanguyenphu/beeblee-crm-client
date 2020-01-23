@@ -161,7 +161,7 @@ class BusinessModalDetail extends Component {
             <BusinessForm business={business} updateData={this.props.updateData}/>
 
 
-            <Row >
+            <Row className="animated fadeInUp">
               <h5>Contacts </h5>
               <ContactForm
                 business={business}

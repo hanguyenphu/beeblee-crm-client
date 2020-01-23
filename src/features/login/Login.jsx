@@ -59,15 +59,15 @@ class Login extends Component {
 
     render() {
         const { email, password, loading, errorMessage } = this.state;
-        const { user } = this.props;
+
         return (
-            <div
+            <div className="radius-corner"
                 style={{
                     marginTop: "70px",
                     backgroundColor: "white",
                     padding: "20px",
                     boxShadow: "1px 1px 1px #9E9E9E",
-                    borderRadius: "7px",
+
 
                 }}
             >
@@ -118,7 +118,7 @@ class Login extends Component {
                     </form>
                     {errorMessage && (
                             <div className='red-text text-accent-2 animated shake'>
-                                <p className='animated bounceOutLeft delay-2s' > {errorMessage}</p>
+                                <p  > {errorMessage}</p>
                             </div>
                         )}
                         <br />
