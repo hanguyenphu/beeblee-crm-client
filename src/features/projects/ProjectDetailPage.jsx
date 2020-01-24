@@ -5,6 +5,10 @@ import Loading from "../loading/Loading";
 import ProjectForm from "./ProjectForm";
 import { Row, Button, Icon, Tabs, Tab } from "react-materialize";
 import ProjectAccounts from "./ProjectAccounts";
+import { ContactTable } from "../contact/ContactTable";
+import ContactForm from "../contact/ContactForm";
+import UploadTable from "../upload/UploadTable";
+import UploadModal from "../upload/UploadModal";
 
 function mapStateToProps(state) {
   return {};
@@ -22,11 +26,21 @@ class ProjectDetailPage extends Component {
 
   getProjectDetail = () => {
     const projectId = this.props.match.params.id;
+    //get the project detail first
     API.get(`/projects/${projectId}`)
       .then(response => {
-        this.setState({
-          project: response.data,
-          loading: false
+        const project = response.data;
+        const businessId = response.data.business._id;
+        // then get the business contacts
+        API.get(`/businesses/${businessId}`).then(response2 => {
+          const business = response2.data.business;
+          const contacts = business.contacts;
+          this.setState({
+            contacts,
+            business,
+            project,
+            loading: false
+          });
         });
       })
       .catch(error => {
@@ -40,12 +54,22 @@ class ProjectDetailPage extends Component {
     this.props.history.goBack();
   };
 
+  addMoreContactToTable = contact => {
+    let contacts = this.state.contacts;
+    if (!contacts.some( e => e._id == contact._id)) {
+      contacts.push(contact);
+      this.setState({
+        ...this.state,
+        contacts
+      });
+    }
+  };
+
   render() {
-    const { project, loading } = this.state;
+    const { project, loading, business, contacts } = this.state;
     if (loading) {
       return <Loading />;
     }
-
     return (
       <div>
         <Row style={{ marginTop: "20px" }}>
@@ -95,10 +119,13 @@ class ProjectDetailPage extends Component {
             >
               <Row>
                 <h5>Accounts </h5>
-
               </Row>
 
-              <ProjectAccounts accounts={project.accounts} projectId={project._id} getProjectDetail={this.getProjectDetail}/>
+              <ProjectAccounts
+                accounts={project.accounts}
+                projectId={project._id}
+                getProjectDetail={this.getProjectDetail}
+              />
             </Tab>
             <Tab
               options={{
@@ -107,22 +134,32 @@ class ProjectDetailPage extends Component {
                 responsiveThreshold: Infinity,
                 swipeable: false
               }}
-              title="Others"
+              title="Contacts"
             >
-              <h5>Others</h5>
+              <Row>
+                <h5>Contacts </h5>
+                <ContactForm
+                  business={business}
+                  addMoreContactToTable={this.addMoreContactToTable}
+                />
+                <ContactTable contacts={contacts} business={business} />
+              </Row>
             </Tab>
+            <Tab
+              options={{
+                duration: 300,
+                onShow: null,
+                responsiveThreshold: Infinity,
+                swipeable: false
+              }}
+              title="Uploads"
+            >
+              <h5>Uploads</h5>
+              <UploadModal projectId={project._id}  getProjectDetail={this.getProjectDetail}/>
+              <UploadTable uploads={project.uploads}/>
+            </Tab>
+
             {/* <Tab
-              options={{
-                duration: 300,
-                onShow: null,
-                responsiveThreshold: Infinity,
-                swipeable: false
-              }}
-              title="Test 4"
-            >
-              Test 4
-            </Tab>
-            <Tab
               options={{
                 duration: 300,
                 onShow: null,
