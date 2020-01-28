@@ -9,6 +9,9 @@ import { ContactTable } from "../contact/ContactTable";
 import ContactForm from "../contact/ContactForm";
 import UploadTable from "../upload/UploadTable";
 import UploadModal from "../upload/UploadModal";
+import { Link } from "react-router-dom";
+import BusinessForm from "../business/BusinessForm";
+import TextInput from "react-materialize/lib/TextInput";
 
 function mapStateToProps(state) {
   return {};
@@ -45,8 +48,9 @@ class ProjectDetailPage extends Component {
       })
       .catch(error => {
         this.setState({
-          loading: false
+          loading: true
         });
+        this.props.history.push("/businesses");
       });
   };
 
@@ -56,7 +60,7 @@ class ProjectDetailPage extends Component {
 
   addMoreContactToTable = contact => {
     let contacts = this.state.contacts;
-    if (!contacts.some( e => e._id == contact._id)) {
+    if (!contacts.some(e => e._id == contact._id)) {
       contacts.push(contact);
       this.setState({
         ...this.state,
@@ -70,6 +74,7 @@ class ProjectDetailPage extends Component {
     if (loading) {
       return <Loading />;
     }
+
     return (
       <div>
         <Row style={{ marginTop: "20px" }}>
@@ -93,7 +98,11 @@ class ProjectDetailPage extends Component {
             boxShadow: "1px 1px 1px #9E9E9E"
           }}
         >
-          <h4>Project Details</h4>
+          <Row>
+            <h4>Project Details </h4>
+          <Link to={`/businesses/` + project.business._id}>View all projects of this business</Link>
+          </Row>
+
           <Tabs className="tab-demo z-depth-1 tabs-fixed-width">
             <Tab
               active
@@ -155,21 +164,25 @@ class ProjectDetailPage extends Component {
               title="Uploads"
             >
               <h5>Uploads</h5>
-              <UploadModal projectId={project._id}  getProjectDetail={this.getProjectDetail}/>
-              <UploadTable uploads={project.uploads}/>
+              <UploadModal
+                projectId={project._id}
+                getProjectDetail={this.getProjectDetail}
+              />
+              <UploadTable uploads={project.uploads} />
             </Tab>
 
-            {/* <Tab
+            <Tab
               options={{
                 duration: 300,
                 onShow: null,
                 responsiveThreshold: Infinity,
                 swipeable: false
               }}
-              title="Test 4"
+              title="Business"
             >
-              Test 5
-            </Tab> */}
+              <h5>Business Detail:</h5>
+             <BusinessForm business={business} updateData={this.getProjectDetail} />
+            </Tab>
           </Tabs>
         </Row>
       </div>

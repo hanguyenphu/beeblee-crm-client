@@ -14,11 +14,10 @@ class ProjectAccounts extends Component {
     const {accounts} = this.props
     return (
       <div>
+         <CreateAccountModal projectId={this.props.projectId} getProjectDetail={this.props.getProjectDetail}/>
           {accounts.map(account => {
             return <AccountForm account={account} key={account._id}/>
           })}
-
-          <CreateAccountModal projectId={this.props.projectId} getProjectDetail={this.props.getProjectDetail}/>
       </div>
     );
   }

@@ -18,7 +18,7 @@ class UploadModal extends Component {
           ]}
           bottomSheet={false}
           fixedFooter={false}
-          header="Modal Header"
+          header="Upload File"
           id="modal-0"
           options={{
             dismissible: true,

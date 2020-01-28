@@ -18,7 +18,6 @@ import API from "../../utils/API/API";
 import formatPhone from "../../utils/commons/FormatPhone";
 import CreateBusinessModal from "./CreateBusinessModal";
 import { Link } from "react-router-dom";
-import ProvinceDropdown from "../common/ProvinceDropdown";
 
 const mapStateToProps = state => {
   return { provinces: state.provinces };
@@ -348,7 +347,7 @@ class Business extends Component {
           }}
         >
           <Col s={12} m={12} l={12} xl={12} style={{ marginTop: "50px" }}>
-            <Row style={{ margin: "0px auto", textAlign: "center" }}>
+            <Row style={{ textAlign: "center" }}>
               <Pagination
                 activePage={currentPage}
                 items={businessCount / 5 + 1}
@@ -360,7 +359,7 @@ class Business extends Component {
                 }}
               />
             </Row>
-            <Table>
+            <Table striped={true} responsive={true}>
               <thead>
                 <tr>
                   <th data-field="id">Name</th>

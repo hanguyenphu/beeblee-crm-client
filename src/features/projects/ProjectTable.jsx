@@ -9,13 +9,15 @@ function mapStateToProps(state) {
   return {};
 }
 
+//Display all project in a table
+//required Projects array as a prop
 class ProjectTable extends Component {
   state = {
     loading: true,
     projects: []
   };
   componentDidMount() {
-    if (this.props.business) {
+    if (this.props.projects) {
       this.setState({
         ...this.state,
         projects: this.props.projects,
@@ -23,26 +25,6 @@ class ProjectTable extends Component {
       });
     }
   }
-
-  // getProjectsData = () => {
-  //   const businessId = this.props.business._id;
-  //   API.get(`/projects/${businessId}`)
-  //   .then(response => {
-  //     const projects = response.data;
-  //     this.setState({
-  //       ...this.state,
-  //       loading: false,
-  //       projects
-  //     });
-  //   })
-  //   .catch(error => {
-  //     console.log(error);
-  //     this.setState({
-  //       ...this.state,
-  //       loading: false
-  //     });
-  //   });
-  // }
 
   displayProjects = projects => {
     return projects.map(project => {
@@ -73,7 +55,7 @@ class ProjectTable extends Component {
     const { projects } = this.props;
 
     return (
-      <Table className="animated fadeIn">
+      <Table className="animated fadeIn"  striped={true} responsive={true}>
         <thead>
           <tr>
             <th data-field="id">Project Name</th>
@@ -88,7 +70,7 @@ class ProjectTable extends Component {
             this.displayProjects(projects)
           ) : (
             <tr>
-              <td>There is no project found under this business</td>
+              <td>There is no project found!</td>
             </tr>
           )}
         </tbody>

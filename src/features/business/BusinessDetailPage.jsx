@@ -5,6 +5,7 @@ import Loading from "../loading/Loading";
 import { Row, Button, Icon } from "react-materialize";
 import CreateProjectModal from "../projects/CreateProjectModal";
 import ProjectTable from "../projects/ProjectTable";
+import axios from "axios";
 
 function mapStateToProps(state, ownProps) {
   return {};
@@ -19,30 +20,51 @@ class BusinessDetailPage extends Component {
     projects: []
   };
 
-
   updateData = () => {};
 
   getBusinessData = () => {
     const businessId = this.props.match.params.id;
-    API.get(`/businesses/${businessId}`).then(response => {
-      const projects = response.data.business.projects;
-      this.setState({
-        ...this.state,
-        projects,
-        business: response.data.business,
-        loading: false
-      })
-    }).catch(error => {
-      this.props.history.push("/businesses")
-    })
-  }
+
+    // API.get(`/businesses/${businessId}`)
+    //   .then(response => {
+    //     const projects = response.data.business.projects;
+    //     this.setState({
+    //       ...this.state,
+    //       projects,
+    //       business: response.data.business,
+    //       loading: false
+    //     });
+    //   })
+    //   .catch(error => {
+    //     this.props.history.push("/businesses");
+    //   });
+
+    const getBusinessRequest = API.get(`/businesses/${businessId}`);
+    const getProjectsRequest = API.get(`/projects/business/${businessId}`);
+
+    axios
+      .all([getBusinessRequest, getProjectsRequest])
+      .then(
+        axios.spread((...responses) => {
+          const business = responses[0].data.business;
+          const projects = responses[1].data;
+          this.setState({
+            business,
+            projects,
+            loading: false
+          });
+        })
+      )
+      .catch(error => {
+        this.props.history.push("/businesses");
+      });
+  };
 
   componentDidMount() {
     if (this.props.match.params.id) {
-      this.getBusinessData()
+      this.getBusinessData();
     }
   }
-
 
   handleOpenCreateProjectModel = () => {
     this.setState({
@@ -58,13 +80,9 @@ class BusinessDetailPage extends Component {
     });
   };
 
-
-
-
-
   handleGoBack = () => {
-    this.props.history.push('/businesses')
-  }
+    this.props.history.goBack();
+  };
   render() {
     const { loading } = this.state;
 
@@ -73,11 +91,16 @@ class BusinessDetailPage extends Component {
     }
     const { business, openCreateProjectModal, projects } = this.state;
 
-
     return (
       <div>
         <Row style={{ marginTop: "20px" }}>
-          <Button node="button" type="submit" waves="light" className="gradient-btn btn-white" onClick={this.handleGoBack}>
+          <Button
+            node="button"
+            type="submit"
+            waves="light"
+            className="gradient-btn btn-white"
+            onClick={this.handleGoBack}
+          >
             Go Back
             <Icon left>arrow_back</Icon>
           </Button>
@@ -106,7 +129,7 @@ class BusinessDetailPage extends Component {
             boxShadow: "1px 1px 1px #9E9E9E"
           }}
         >
-          {projects && <ProjectTable business={business} projects={projects} />}
+          {projects && <ProjectTable projects={projects} />}
         </Row>
 
         {openCreateProjectModal && (

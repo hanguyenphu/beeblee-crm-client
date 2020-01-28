@@ -76,7 +76,7 @@ export class ContactTable extends Component {
         return (
             <Row >
                 <Col x={12} s={12} l={12} m={12} xl={12}>
-                    <Table x={12} s={12} l={12} m={12} xl={12}  className="radius-corner">
+                    <Table x={12} s={12} l={12} m={12} xl={12}  className="radius-corner" striped={true} responsive={true}>
                         <thead>
                             <tr>
                                 <th data-field='id'>Name</th>

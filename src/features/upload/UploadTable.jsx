@@ -32,7 +32,7 @@ class UploadTable extends Component {
     return (
       <div>
         <Row>
-          <Table>
+          <Table striped={true} responsive={true}>
             <thead>
               <tr>
                 <th data-field="id">Title</th>

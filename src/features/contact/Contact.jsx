@@ -45,7 +45,7 @@ class Contact extends Component {
             boxShadow: "1px 1px 1px #9E9E9E"
           }}
         >
-          <Table >
+          <Table striped={true} responsive={true}>
             <thead>
               <tr>
                 <th data-field="name">Name</th>

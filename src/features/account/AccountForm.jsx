@@ -16,15 +16,6 @@ function mapStateToProps(state) {
 
 class AccountForm extends Component {
   state = {
-    // account: {
-    //   domain: "",
-    //   username: "",
-    //   password: "",
-    //   startDate: "",
-    //   expireDate: "",
-    //   price: "",
-    //   description: ""
-    // },
     edited: false,
     successMessage: "",
     errorMessage: ""

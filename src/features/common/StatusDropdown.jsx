@@ -15,7 +15,6 @@ class StatusDropdown extends Component {
   };
   componentDidMount() {
     if(this.props.status){
-
       this.setState({
         ...this.state,
         status: this.props.status
@@ -74,13 +73,14 @@ class StatusDropdown extends Component {
           }}
           value={this.props.status? this.props.status._id: ""}
           name="status"
+
         >
           <option disabled value="">
             Choose status
           </option>
           {statuses.map(status => {
             return (
-              <option value={status._id} key={status._id}>
+              <option value={status._id} key={status._id}  style={{color:`${status.color}`}} >
                 {status.title}
               </option>
             );
