@@ -80,13 +80,13 @@ class Business extends Component {
     const getBusinessRequest = API.get("businesses?pageNo=1");
 
     //This API get all businesses and add to redux
-    API(`/search/businesses`)
-      .then(response => {
-        this.props.addBusinessesToRedux(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    // API(`/search/businesses`)
+    //   .then(response => {
+    //     this.props.addBusinessesToRedux(response.data);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
 
     //APT get all businesses with page Number and provinces
     axios

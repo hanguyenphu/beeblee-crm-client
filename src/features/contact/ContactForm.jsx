@@ -178,7 +178,7 @@ class ContactForm extends Component {
                             <p>Phone: {this.state.dublicatedContact.phone}</p>
                             <p>Email: {this.state.dublicatedContact.email}</p>
                             <Row>
-                                <Button onClick={this.useExistingContact}>
+                                <Button onClick={this.useExistingContact} className="gradient-btn btn-green">
                                     Use this contact
                                 </Button>
                                 <Button

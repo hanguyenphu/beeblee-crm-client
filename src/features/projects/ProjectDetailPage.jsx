@@ -50,7 +50,7 @@ class ProjectDetailPage extends Component {
         this.setState({
           loading: true
         });
-        this.props.history.push("/businesses");
+        this.props.history.push("/notfound");
       });
   };
 
@@ -100,7 +100,9 @@ class ProjectDetailPage extends Component {
         >
           <Row>
             <h4>Project Details </h4>
-          <Link to={`/businesses/` + project.business._id}>View all projects of this business</Link>
+            <Link to={`/businesses/` + project.business._id}>
+              View all projects of this business
+            </Link>
           </Row>
 
           <Tabs className="tab-demo z-depth-1 tabs-fixed-width">
@@ -154,6 +156,22 @@ class ProjectDetailPage extends Component {
                 <ContactTable contacts={contacts} business={business} />
               </Row>
             </Tab>
+
+            <Tab
+              options={{
+                duration: 300,
+                onShow: null,
+                responsiveThreshold: Infinity,
+                swipeable: false
+              }}
+              title="Business"
+            >
+              <h5>Business Detail:</h5>
+              <BusinessForm
+                business={business}
+                updateData={this.getProjectDetail}
+              />
+            </Tab>
             <Tab
               options={{
                 duration: 300,
@@ -169,19 +187,6 @@ class ProjectDetailPage extends Component {
                 getProjectDetail={this.getProjectDetail}
               />
               <UploadTable uploads={project.uploads} />
-            </Tab>
-
-            <Tab
-              options={{
-                duration: 300,
-                onShow: null,
-                responsiveThreshold: Infinity,
-                swipeable: false
-              }}
-              title="Business"
-            >
-              <h5>Business Detail:</h5>
-             <BusinessForm business={business} updateData={this.getProjectDetail} />
             </Tab>
           </Tabs>
         </Row>

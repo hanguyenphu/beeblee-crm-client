@@ -115,7 +115,7 @@ class EditContactForm extends Component {
                             waves='light'
                             style={{ marginTop: "20px" }}
                             disabled={!edited}
-                            className={edited ? 'gradient-btn btn-blue': 'gradient-btn'}
+                            className={edited ? 'gradient-btn btn-green': 'gradient-btn'}
                         >
                             Save
                             <Icon left>save</Icon>

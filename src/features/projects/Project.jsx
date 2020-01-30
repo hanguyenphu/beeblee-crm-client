@@ -30,9 +30,22 @@ class Project extends Component {
         });
       })
       .catch(error => {
-        console.log(error);
+        this.props.history.push("/notfound");
       });
   };
+
+  //get the new data from ProjectFilter Component and display search result
+  searchData = (newData, count) => {
+    this.setState({
+      projects: newData,
+      totalProjects:count
+    })
+  }
+
+  //Reset filter project
+  resetFilter = e => {
+    this.getProjects(1)
+  }
 
   setPageNumber = pageNo => {
     this.setState({
@@ -56,7 +69,7 @@ class Project extends Component {
           </Col>
         </Row>
 
-        <ProjectFilter />
+        <ProjectFilter searchData={this.searchData} resetFilter={this.resetFilter}/>
         <Row
           className=" radius-corner"
           style={{

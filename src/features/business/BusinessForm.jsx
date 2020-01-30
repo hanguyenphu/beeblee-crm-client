@@ -157,7 +157,7 @@ class BusinessForm extends Component {
           <Row>
             <Button
               node="button"
-              className={edited ? "gradient-btn btn-primary" : ""}
+              className={edited ? "gradient-btn btn-green" : ""}
               waves="green"
               disabled={!edited}
             >

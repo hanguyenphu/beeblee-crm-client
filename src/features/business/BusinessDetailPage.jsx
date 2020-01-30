@@ -25,20 +25,6 @@ class BusinessDetailPage extends Component {
   getBusinessData = () => {
     const businessId = this.props.match.params.id;
 
-    // API.get(`/businesses/${businessId}`)
-    //   .then(response => {
-    //     const projects = response.data.business.projects;
-    //     this.setState({
-    //       ...this.state,
-    //       projects,
-    //       business: response.data.business,
-    //       loading: false
-    //     });
-    //   })
-    //   .catch(error => {
-    //     this.props.history.push("/businesses");
-    //   });
-
     const getBusinessRequest = API.get(`/businesses/${businessId}`);
     const getProjectsRequest = API.get(`/projects/business/${businessId}`);
 
@@ -56,7 +42,7 @@ class BusinessDetailPage extends Component {
         })
       )
       .catch(error => {
-        this.props.history.push("/businesses");
+        this.props.history.push("/notfound");
       });
   };
 

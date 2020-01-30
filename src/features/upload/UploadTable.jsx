@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Row, Table, Icon } from "react-materialize";
 import Loading from "../loading/Loading";
+import { Link } from "react-router-dom";
 function mapStateToProps(state) {
   return {};
 }
@@ -39,7 +40,6 @@ class UploadTable extends Component {
                 <th data-field="name">Description</th>
                 <th data-field="price">Review</th>
                 <th data-field="price">Download</th>
-
               </tr>
             </thead>
             <tbody>
@@ -48,7 +48,12 @@ class UploadTable extends Component {
                   <tr key={upload._id}>
                     <td>{upload.title}</td>
                     <td>{upload.description}</td>
-                    <td><img src={upload.url} style={{height: "100px"}} /></td>
+                    {/* <td><img src={upload.url} style={{height: "100px"}} /></td> */}
+                    <td>
+                      <Link to={"/viewupload/" + upload._id }  >
+                        <Icon>launch</Icon>
+                      </Link>
+                    </td>
                     <td>
                       <a href={upload.url}>
                         <Icon>cloud_download</Icon>

@@ -4,6 +4,7 @@ import { Row, TextInput } from "react-materialize";
 import Button from "react-materialize/lib/Button";
 import StatusDropdown from "../common/StatusDropdown";
 import CategoryDropdown from "../common/CategoryDropdown";
+import API from "../../utils/API/API";
 function mapStateToProps(state) {
   return {};
 }
@@ -14,13 +15,35 @@ class ProjectFilter extends Component {
       name: "",
       status: "",
       category: ""
-    }
+    },
+    edited: false
   };
 
   handleSearch = e => {
     e.preventDefault();
-    console.log(this.state.search);
+    API.post('/search/projects', this.state.search).then(response => {
+      if(response.data){
+
+       this.props.searchData(response.data.projects, response.data.count)
+      }
+    }).catch(error => {
+      console.log(error)
+    })
+    //console.log(this.state.search);
   };
+
+  handleReset = e => {
+    e.preventDefault()
+    this.setState({
+      search: {
+        name: "",
+        status: "",
+        category: ""
+      },
+      edited: false
+    })
+    this.props.resetFilter()
+  }
   handleChange = e => {
     const field = e.target.name;
     const value = e.target.value;
@@ -28,11 +51,12 @@ class ProjectFilter extends Component {
 
     search[field] = value;
     this.setState({
-      search
+      search,
+      edited: true
     });
   };
   render() {
-    const { search } = this.state;
+    const { search, edited } = this.state;
     return (
       <div>
         <form onSubmit={this.handleSearch}>
@@ -50,6 +74,10 @@ class ProjectFilter extends Component {
               value={search.name}
               name="name"
               onChange={this.handleChange}
+              s={12}
+              l={6}
+              m={6}
+              xl={6}
             />
             <StatusDropdown
               handleChangeProject={this.handleChange}
@@ -69,8 +97,9 @@ class ProjectFilter extends Component {
             />
             <Button
               type="submit"
-              className="gradient-btn btn-blue"
+              className= {edited? "gradient-btn btn-blue" : ""}
               node="button"
+              disabled = {!edited}
               style={{
                 marginRight: "5px",
                 bottom: "-20px",
@@ -82,11 +111,13 @@ class ProjectFilter extends Component {
             <Button
               className="gradient-btn btn-white"
               node="button"
+              type="reset"
               style={{
                 marginRight: "5px",
                 bottom: "-20px",
                 marginBottom: "20px"
               }}
+              onClick={this.handleReset}
             >
               Reset
             </Button>

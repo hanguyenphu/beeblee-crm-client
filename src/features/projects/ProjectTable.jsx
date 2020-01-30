@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { Table } from "react-materialize";
 import API from "../../utils/API/API";
 import Loading from "../loading/Loading";
-import StatusDropdown from "../common/StatusDropdown";
-import DisplayStatus from "../common/DisplayStatus";
+
 function mapStateToProps(state) {
   return {};
 }
@@ -14,7 +13,8 @@ function mapStateToProps(state) {
 class ProjectTable extends Component {
   state = {
     loading: true,
-    projects: []
+    projects: [],
+    statuses: []
   };
   componentDidMount() {
     if (this.props.projects) {
@@ -24,12 +24,31 @@ class ProjectTable extends Component {
         loading: false
       });
     }
+
+    API.get("/statuses")
+    .then(response => {
+      this.setState({
+        ...this.state,
+        statuses: response.data,
+        loading: false
+      });
+    })
+    .catch(error => {
+      this.setState({
+        ...this.state,
+        loading: false
+      });
+      console.log(error);
+    });
   }
 
   displayProjects = projects => {
+    const {statuses} = this.state
+
     return projects.map(project => {
       const startDate = new Date(project.startDate);
       const completedDate = new Date(project.completedDate);
+      const status = statuses.filter(status => status._id === project.status)[0]
 
       return (
         <tr key={project._id}>
@@ -38,7 +57,7 @@ class ProjectTable extends Component {
           </td>
           <td>{project.price.$numberDecimal}</td>
           <td>
-            <DisplayStatus status={project.status} />
+           {status && <p style={{ color: `${status.color}` }}>{status.title}</p>}
           </td>
           <td>{project.startDate && startDate.toDateString()}</td>
           <td>{project.completedDate && completedDate.toDateString()}</td>

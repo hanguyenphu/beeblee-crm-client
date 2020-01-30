@@ -27,7 +27,7 @@ class CreateAccountModal extends Component {
             </Button>
           ]}
           bottomSheet={false}
-          fixedFooter={false}
+          fixedFooter={true}
           header="Add An Account"
           id="modal-0"
           options={{

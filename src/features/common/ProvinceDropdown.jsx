@@ -19,9 +19,8 @@ class ProvinceDropdown extends Component {
     API.get("/provinces")
       .then(response => {
         //if province is from props, check if it is the id or province object
-        const province = this.props.province._id
-          ? this.props.province._id
-          : this.props.province;
+        const province = this.props.province._id || this.props.province
+
 
         this.setState({
           provinces: response.data,
