@@ -36,6 +36,16 @@ class SideNavItems extends Component {
           <SideNavItem href="/admin/users" icon="group">
             Manage Users
           </SideNavItem>
+          <SideNavItem href="/admin/statuses" icon="star">
+            Manage Status
+          </SideNavItem>
+          <SideNavItem href="/admin/categories" icon="category">
+            Manage Category
+          </SideNavItem>
+          <SideNavItem href="/admin/provinces" icon="museum">
+            Manage Provinces
+          </SideNavItem>
+
         </div>
       );
     }
@@ -60,7 +70,7 @@ class SideNavItems extends Component {
             <SideNavItem href="/projects" icon="assignment_turned_in">
               Projects
             </SideNavItem>
-            <SideNavItem href="/businesses" icon="business">
+            <SideNavItem href="/businesses" icon="storefront">
               Business
             </SideNavItem>
             <SideNavItem href="/contacts" icon="account_box">

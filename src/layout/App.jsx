@@ -20,6 +20,7 @@ import ViewUpload from "../features/upload/ViewUpload";
 import User from "../features/admin/user/User";
 import NotFound from "../features/admin/notfound/NotFound";
 import ProjectContributors from "../features/admin/project/ProjectContributors";
+import Status from "../features/admin/status/Status";
 const mapStateToProps = state => {
   return { user: state.user };
 };
@@ -38,23 +39,28 @@ class App extends Component {
               <Container className="main">
                 <Switch>
                   {admin && (
-
-                      <Route
-                        exact
-                        path="/admin/users"
-                        component={admin ? User : NotFound}
-                      />
-
+                    <Route
+                      exact
+                      path="/admin/users"
+                      component={admin ? User : NotFound}
+                    />
                   )}
                   {admin && (
+                    <Route
+                      exact
+                      path="/admin/projects"
+                      component={admin ? ProjectContributors : NotFound}
+                    />
+                  )}
+                   {admin && (
+                    <Route
+                      exact
+                      path="/admin/statuses"
+                      component={admin ? Status : NotFound}
+                    />
+                  )}
 
-                  <Route
-                    exact
-                    path="/admin/projects"
-                    component={admin ? ProjectContributors : NotFound}
-                  />
 
-              )}
                   <Route
                     exact
                     path="/projects"
