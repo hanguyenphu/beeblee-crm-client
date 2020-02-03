@@ -80,7 +80,7 @@ class StatusDropdown extends Component {
           </option>
           {statuses.map(status => {
             return (
-              <option value={status._id} key={status._id}  style={{color:`${status.color}`}} >
+              <option value={status._id} key={status._id} >
                 {status.title}
               </option>
             );

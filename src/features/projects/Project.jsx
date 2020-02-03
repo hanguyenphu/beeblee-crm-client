@@ -65,7 +65,7 @@ class Project extends Component {
         <Row style={{ marginTop: "20px" }}></Row>
         <Row>
           <Col>
-            <h5>All Projects</h5>
+            <h5><Icon>assignment_turned_in</Icon> All Projects</h5>
           </Col>
         </Row>
 
@@ -81,7 +81,7 @@ class Project extends Component {
           <Row style={{ textAlign: "center" }}>
             <Pagination
               activePage={pageNo}
-              items={totalProjects / 10 + 1}
+              items={parseInt(totalProjects / 10 +1)}
               leftBtn={<Icon>chevron_left</Icon>}
               maxButtons={3}
               rightBtn={<Icon>chevron_right</Icon>}

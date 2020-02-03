@@ -58,7 +58,7 @@ class User extends Component {
       <div>
         <Row style={{ marginTop: "20px" }}></Row>
         <h5>
-          Users{" "}
+          <Icon>group</Icon> Users{" "}
           <Button
             node="button"
             type="submit"

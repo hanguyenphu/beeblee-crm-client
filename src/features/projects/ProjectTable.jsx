@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Table } from "react-materialize";
 import API from "../../utils/API/API";
 import Loading from "../loading/Loading";
-
+import formatDate from "../../utils/commons/FormatDate"
 function mapStateToProps(state) {
   return {};
 }
@@ -59,8 +59,8 @@ class ProjectTable extends Component {
           <td>
            {status && <p style={{ color: `${status.color}` }}>{status.title}</p>}
           </td>
-          <td>{project.startDate && startDate.toDateString()}</td>
-          <td>{project.completedDate && completedDate.toDateString()}</td>
+          <td>{project.startDate && formatDate(startDate)}</td>
+          <td>{project.completedDate && formatDate(completedDate)}</td>
         </tr>
       );
     });

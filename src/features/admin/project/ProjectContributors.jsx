@@ -69,7 +69,7 @@ class ProjectContributors extends Component {
         <Row style={{ marginTop: "20px" }}></Row>
         <Row>
           <Col>
-            <h5>Project Contributors</h5>
+            <h5><Icon>assignment_turned_in</Icon>Project Contributors</h5>
           </Col>
         </Row>
 
