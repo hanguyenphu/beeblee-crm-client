@@ -76,18 +76,6 @@ class App extends Component {
                     />
                   )}
 
-                  <Route
-                    exact
-                    path="/"
-                    render={() => (
-                      loggedIn ? (
-                        <Redirect to="/projects"/>
-                      ) : (
-                        <Redirect to="/login"/>
-                      )
-                    )} />}
-                  />
-
 
                   <Route
                     exact
