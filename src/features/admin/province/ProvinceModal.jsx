@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Modal, Button } from "react-materialize";
-import StatusForm from "./StatusForm";
+import ProvinceForm from "./ProvinceForm";
 function mapStateToProps(state) {
   return {};
 }
 
-class StatusModal extends Component {
+class ProvinceModal extends Component {
   render() {
-    const {status} = this.props || {}
-
+    const {province} = this.props || {}
     return (
       <div>
         <Modal
@@ -19,8 +18,8 @@ class StatusModal extends Component {
             </Button>
           ]}
           bottomSheet={false}
-        //   fixedFooter
-          header="Status"
+          //   fixedFooter
+          header="Province"
           id="modal-0"
           open={true}
           options={{
@@ -37,11 +36,11 @@ class StatusModal extends Component {
             startingTop: "4%"
           }}
         >
-           <StatusForm status={status} updateData={this.props.updateData}/>
+          <ProvinceForm province={province} updateData={this.props.updateData} />
         </Modal>
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps)(StatusModal);
+export default connect(mapStateToProps)(ProvinceModal);

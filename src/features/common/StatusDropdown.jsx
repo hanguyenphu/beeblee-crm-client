@@ -22,9 +22,10 @@ class StatusDropdown extends Component {
     }
     API.get("/statuses")
       .then(response => {
+        const statuses = response.data.filter(status => status.active)
         this.setState({
           ...this.state,
-          statuses: response.data,
+          statuses,
           loading: false
         });
       })

@@ -2,36 +2,35 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { TextInput, Button, Row, Select } from "react-materialize";
 import API from "../../../utils/API/API";
-
 function mapStateToProps(state) {
   return {};
 }
 
-class StatusForm extends Component {
+class CategoryForm extends Component {
   state = {
-    status: {
+    category: {
       title: "",
-      color: "",
+      description: "",
       order: "",
       active: true
     },
     edited: false
   };
   componentDidMount() {
-    const { status } = this.props;
-    if (status) {
+    const { category } = this.props;
+    if (category) {
       this.setState({
-        status
+        category
       });
     }
   }
 
-  createStatus = status => {
-    API.post(`/statuses`, status)
+  createCategory = category => {
+    API.post(`/categories`, category)
       .then(response => {
         if (response.data) {
           this.setState({
-            successMessage: "Status was created",
+            successMessage: "Category was created",
             errorMessage: "",
             edited: false
           });
@@ -45,12 +44,13 @@ class StatusForm extends Component {
         });
       });
   };
-  updateStatus = status => {
-    API.patch(`/statuses/${status._id}`, status)
+
+  updateCategory = category => {
+    API.patch(`/categories/${category._id}`, category)
       .then(response => {
         if (response.data) {
           this.setState({
-            successMessage: "Status was updated",
+            successMessage: "Category was updated",
             errorMessage: "",
             edited: false
           });
@@ -67,11 +67,12 @@ class StatusForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { status } = this.state;
-    if (status._id) {
-      this.updateStatus(status);
+    const { category } = this.state;
+    if (category._id) {
+      this.updateCategory(category);
+
     } else {
-      this.createStatus(status);
+      this.createCategory(category);
       this.props.updateData();
     }
   };
@@ -79,18 +80,19 @@ class StatusForm extends Component {
   handleChange = e => {
     const field = e.target.name;
     const value = e.target.value;
-    let { status } = this.state;
-    status[field] = value;
+    let { category } = this.state;
+    category[field] = value;
     this.setState({
-      status,
+      category,
       edited: true
     });
   };
-  render() {
-    const { status, edited } = this.state;
 
+  render() {
+    const { category, edited } = this.state;
     return (
       <div>
+        {" "}
         <form onSubmit={this.handleSubmit}>
           <Row>
             <TextInput
@@ -100,7 +102,7 @@ class StatusForm extends Component {
               l={6}
               label="Title:"
               name="title"
-              value={status.title}
+              value={category.title}
               onChange={this.handleChange}
             />
             <TextInput
@@ -108,9 +110,9 @@ class StatusForm extends Component {
               m={6}
               xl={6}
               l={6}
-              label="Color:"
-              name="color"
-              value={status.color}
+              label="Description:"
+              name="description"
+              value={category.description}
               onChange={this.handleChange}
             />
             <TextInput
@@ -120,7 +122,7 @@ class StatusForm extends Component {
               l={6}
               label="Order:"
               name="order"
-              value={status.order.toString()}
+              value={category.order.toString()}
               onChange={this.handleChange}
             />
 
@@ -150,7 +152,7 @@ class StatusForm extends Component {
                   outDuration: 250
                 }
               }}
-              value={status.active.toString()}
+              value={category.active.toString()}
               required
             >
               <option value="true">Active</option>
@@ -187,4 +189,4 @@ class StatusForm extends Component {
   }
 }
 
-export default connect(mapStateToProps)(StatusForm);
+export default connect(mapStateToProps)(CategoryForm);

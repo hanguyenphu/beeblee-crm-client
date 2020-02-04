@@ -21,6 +21,8 @@ import User from "../features/admin/user/User";
 import NotFound from "../features/admin/notfound/NotFound";
 import ProjectContributors from "../features/admin/project/ProjectContributors";
 import Status from "../features/admin/status/Status";
+import Category from "../features/admin/category/Category";
+import Province from "../features/admin/province/Province";
 const mapStateToProps = state => {
   return { user: state.user };
 };
@@ -57,6 +59,20 @@ class App extends Component {
                       exact
                       path="/admin/statuses"
                       component={admin ? Status : NotFound}
+                    />
+                  )}
+                  {admin && (
+                    <Route
+                      exact
+                      path="/admin/categories"
+                      component={admin ? Category : NotFound}
+                    />
+                  )}
+                    {admin && (
+                    <Route
+                      exact
+                      path="/admin/provinces"
+                      component={admin ? Province : NotFound}
                     />
                   )}
 

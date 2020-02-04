@@ -20,10 +20,9 @@ class ProvinceDropdown extends Component {
       .then(response => {
         //if province is from props, check if it is the id or province object
         const province = this.props.province._id || this.props.province
-
-
+        const provinces = response.data.filter(province => province.active)
         this.setState({
-          provinces: response.data,
+          provinces,
           province
         });
       })

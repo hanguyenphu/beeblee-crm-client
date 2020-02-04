@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Table, Icon } from "react-materialize";
-import StatusModal from "./StatusModal";
+import ProvinceModal from "./ProvinceModal";
 function mapStateToProps(state) {
   return {};
 }
 
-class StatusTable extends Component {
+class ProvinceTable extends Component {
   state = {
     openModal: false,
-    status: {},
+    province: {},
     successMessage: "",
     errorMessage: ""
   };
-  handleOpenModel = status => () => {
+  handleOpenModel = province => () => {
     this.setState({
       ...this.state,
       openModal: true,
-      status
+      province
     });
   };
 
@@ -27,28 +27,25 @@ class StatusTable extends Component {
     });
   };
 
-  displayStatus = () => {
-    const { statuses } = this.props;
-    return statuses.map(status => {
+  displayProvince = () => {
+    const { provinces } = this.props;
+    return provinces.map(province => {
       return (
-        <tr key={status._id}>
-          <td>{status.title}</td>
+        <tr key={province._id}>
+          <td>{province.name}</td>
+          <td>{province.gst.$numberDecimal}</td>
+          <td>{province.pst.$numberDecimal}</td>
+          <td>{province.hst.$numberDecimal}</td>
+          <td>{province.order}</td>
           <td>
-            <span
-              style={{ backgroundColor: `${status.color}` }}
-              className="dot"
-            ></span>
-          </td>
-          <td>{status.order}</td>
-          <td>
-            {status.active.toString() === "true" ? (
+            {province.active.toString() === "true" ? (
               <span className="dot active"></span>
             ) : (
               <span className="dot inactive"></span>
             )}
           </td>
           <td>
-            <a href="#" onClick={this.handleOpenModel(status)}>
+            <a href="#" onClick={this.handleOpenModel(province)}>
               <Icon>edit</Icon>
             </a>
           </td>
@@ -57,27 +54,29 @@ class StatusTable extends Component {
     });
   };
   render() {
-    const { openModal, status } = this.state;
+    const { openModal, province } = this.state;
     return (
       <div>
         <Table responsive={true} hoverable={true}>
           <thead>
             <tr>
-              <th data-field="title">Title</th>
-              <th data-field="color">Color</th>
+              <th data-field="name">Name</th>
+              <th data-field="Gst">Gst</th>
+              <th data-field="Pst">Pst</th>
+              <th data-field="Pst">Pst</th>
               <th data-field="order">Order</th>
               <th data-field="active">Active</th>
               <th data-field="edit">Edit</th>
             </tr>
           </thead>
-          <tbody>{this.displayStatus()}</tbody>
+          <tbody>{this.displayProvince()}</tbody>
         </Table>
         {openModal && (
-          <StatusModal closeModal={this.closeModal} status={status} />
+          <ProvinceModal closeModal={this.closeModal} province={province} />
         )}
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps)(StatusTable);
+export default connect(mapStateToProps)(ProvinceTable);

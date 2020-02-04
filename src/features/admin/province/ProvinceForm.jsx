@@ -7,31 +7,33 @@ function mapStateToProps(state) {
   return {};
 }
 
-class StatusForm extends Component {
+class ProvinceForm extends Component {
   state = {
-    status: {
-      title: "",
-      color: "",
+    province: {
+      name: "",
+      gst: { $numberDecimal: 0.00 },
+      pst: { $numberDecimal: 0.00 },
+      hst: { $numberDecimal: 0.00 },
       order: "",
       active: true
     },
     edited: false
   };
   componentDidMount() {
-    const { status } = this.props;
-    if (status) {
+    let { province } = this.props;
+    if (province) {
       this.setState({
-        status
+        province
       });
     }
   }
 
-  createStatus = status => {
-    API.post(`/statuses`, status)
+  createProvince = province => {
+    API.post(`/provinces`, province)
       .then(response => {
         if (response.data) {
           this.setState({
-            successMessage: "Status was created",
+            successMessage: "Province was created",
             errorMessage: "",
             edited: false
           });
@@ -45,12 +47,13 @@ class StatusForm extends Component {
         });
       });
   };
-  updateStatus = status => {
-    API.patch(`/statuses/${status._id}`, status)
+
+  updateProvince = province => {
+    API.patch(`/provinces/${province._id}`, province)
       .then(response => {
         if (response.data) {
           this.setState({
-            successMessage: "Status was updated",
+            successMessage: "Province was updated",
             errorMessage: "",
             edited: false
           });
@@ -67,11 +70,11 @@ class StatusForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { status } = this.state;
-    if (status._id) {
-      this.updateStatus(status);
+    const { province } = this.state;
+    if (province._id) {
+      this.updateProvince(province);
     } else {
-      this.createStatus(status);
+      this.createProvince(province);
       this.props.updateData();
     }
   };
@@ -79,16 +82,22 @@ class StatusForm extends Component {
   handleChange = e => {
     const field = e.target.name;
     const value = e.target.value;
-    let { status } = this.state;
-    status[field] = value;
+    let { province } = this.state;
+
+    if (field === "gst" || field === "pst" || field === "hst") {
+      province[field]["$numberDecimal"] = value;
+    } else {
+        province[field] = value;
+    }
+
     this.setState({
-      status,
+      province,
       edited: true
     });
   };
-  render() {
-    const { status, edited } = this.state;
 
+  render() {
+    const { province, edited } = this.state;
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -98,9 +107,9 @@ class StatusForm extends Component {
               m={6}
               xl={6}
               l={6}
-              label="Title:"
-              name="title"
-              value={status.title}
+              label="Name:"
+              name="name"
+              value={province.name}
               onChange={this.handleChange}
             />
             <TextInput
@@ -108,11 +117,32 @@ class StatusForm extends Component {
               m={6}
               xl={6}
               l={6}
-              label="Color:"
-              name="color"
-              value={status.color}
+              label="GST:"
+              name="gst"
+              value={province.gst.$numberDecimal.toString()}
               onChange={this.handleChange}
             />
+            <TextInput
+              s={12}
+              m={6}
+              xl={6}
+              l={6}
+              label="PST:"
+              name="pst"
+              value={province.pst.$numberDecimal.toString()}
+              onChange={this.handleChange}
+            />
+            <TextInput
+              s={12}
+              m={6}
+              xl={6}
+              l={6}
+              label="HST:"
+              name="hst"
+              value={province.hst.$numberDecimal.toString()}
+              onChange={this.handleChange}
+            />
+
             <TextInput
               s={12}
               m={6}
@@ -120,7 +150,7 @@ class StatusForm extends Component {
               l={6}
               label="Order:"
               name="order"
-              value={status.order.toString()}
+              value={province.order.toString()}
               onChange={this.handleChange}
             />
 
@@ -150,7 +180,7 @@ class StatusForm extends Component {
                   outDuration: 250
                 }
               }}
-              value={status.active.toString()}
+              value={province.active.toString()}
               required
             >
               <option value="true">Active</option>
@@ -187,4 +217,4 @@ class StatusForm extends Component {
   }
 }
 
-export default connect(mapStateToProps)(StatusForm);
+export default connect(mapStateToProps)(ProvinceForm);

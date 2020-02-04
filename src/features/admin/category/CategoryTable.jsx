@@ -1,23 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Table, Icon } from "react-materialize";
-import StatusModal from "./StatusModal";
+import CategoryModal from "./CategoryModal";
+
 function mapStateToProps(state) {
   return {};
 }
 
-class StatusTable extends Component {
+class CategoryTable extends Component {
   state = {
     openModal: false,
-    status: {},
-    successMessage: "",
-    errorMessage: ""
+    category: {}
   };
-  handleOpenModel = status => () => {
+  handleOpenModel = category => () => {
     this.setState({
       ...this.state,
       openModal: true,
-      status
+      category
     });
   };
 
@@ -26,29 +25,22 @@ class StatusTable extends Component {
       openModal: false
     });
   };
-
-  displayStatus = () => {
-    const { statuses } = this.props;
-    return statuses.map(status => {
+  displayCategory = () => {
+    const { categories } = this.props;
+    return categories.map(category => {
       return (
-        <tr key={status._id}>
-          <td>{status.title}</td>
+        <tr key={category._id}>
+          <td>{category.title}</td>
+          <td>{category.order}</td>
           <td>
-            <span
-              style={{ backgroundColor: `${status.color}` }}
-              className="dot"
-            ></span>
-          </td>
-          <td>{status.order}</td>
-          <td>
-            {status.active.toString() === "true" ? (
+            {category.active.toString() === "true" ? (
               <span className="dot active"></span>
             ) : (
               <span className="dot inactive"></span>
             )}
           </td>
           <td>
-            <a href="#" onClick={this.handleOpenModel(status)}>
+            <a href="#" onClick={this.handleOpenModel(category)}>
               <Icon>edit</Icon>
             </a>
           </td>
@@ -57,27 +49,26 @@ class StatusTable extends Component {
     });
   };
   render() {
-    const { openModal, status } = this.state;
+    const { openModal, category } = this.state;
     return (
       <div>
         <Table responsive={true} hoverable={true}>
           <thead>
             <tr>
               <th data-field="title">Title</th>
-              <th data-field="color">Color</th>
               <th data-field="order">Order</th>
               <th data-field="active">Active</th>
               <th data-field="edit">Edit</th>
             </tr>
           </thead>
-          <tbody>{this.displayStatus()}</tbody>
+          <tbody>{this.displayCategory()}</tbody>
         </Table>
         {openModal && (
-          <StatusModal closeModal={this.closeModal} status={status} />
+          <CategoryModal closeModal={this.closeModal} category={category} />
         )}
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps)(StatusTable);
+export default connect(mapStateToProps)(CategoryTable);
