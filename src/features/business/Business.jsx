@@ -78,21 +78,12 @@ class Business extends Component {
   getData = () => {
     const getProvinceRequest = API.get("provinces");
     const getBusinessRequest = API.get("businesses?pageNo=1");
-
-    //This API get all businesses and add to redux
-    // API(`/search/businesses`)
-    //   .then(response => {
-    //     this.props.addBusinessesToRedux(response.data);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
-
-    //APT get all businesses with page Number and provinces
+    console.log(localStorage.getItem('token'))
     axios
       .all([getProvinceRequest, getBusinessRequest])
       .then(
         axios.spread((...responses) => {
+
           const provinces = responses[0].data;
           const businesses = responses[1].data.businesses;
           const businessCount = responses[1].data.count;

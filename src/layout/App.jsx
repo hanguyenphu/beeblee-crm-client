@@ -75,8 +75,6 @@ class App extends Component {
                       component={admin ? Province : NotFound}
                     />
                   )}
-
-
                   <Route
                     exact
                     path="/projects"
@@ -108,7 +106,7 @@ class App extends Component {
                   <Route
                     exact
                     path="/login"
-                    component={loggedIn ? Project : Login}
+                    component={loggedIn ? Business : Login}
                   />
                   <Route
                     exact

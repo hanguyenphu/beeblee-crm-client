@@ -19,8 +19,8 @@ function rootReducer(state = initialState, action) {
     //this check the token in localStorage and set the default values for authenticated request from client
     if (localStorage.getItem("user") && localStorage.getItem("token")) {
       const token = localStorage.getItem("token");
-      API.defaults.baseURL = "http://localhost:3000/";
-      API.defaults.headers.common = { Authorization: `Bearer ${token}` };
+      // API.defaults.baseURL = "http://localhost:3000/";
+      // API.defaults.headers.common = { Authorization: `Bearer ${token}` };
 
       return Object.assign({}, state, {
         user: {
@@ -62,7 +62,6 @@ function rootReducer(state = initialState, action) {
   if (action.type === LOGOUT) {
     API.post(`users/logout`)
       .then(response => {
-        console.log(response.data);
         axios.defaults.baseURL = "";
         axios.defaults.headers.common = { Authorization: `` };
       })
