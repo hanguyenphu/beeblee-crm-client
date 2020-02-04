@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Row, TextInput } from "react-materialize";
 import Button from "react-materialize/lib/Button";
-import StatusDropdown from "../common/StatusDropdown";
-import CategoryDropdown from "../common/CategoryDropdown";
-import API from "../../utils/API/API";
+import StatusDropdown from "../../common/StatusDropdown";
+import CategoryDropdown from "../../common/CategoryDropdown";
+import API from "../../../utils/API/API";
+import ContributorDropDown from "../../common/ContributorDropDown";
 function mapStateToProps(state) {
   return {};
 }
@@ -15,7 +16,7 @@ class ProjectFilter extends Component {
       name: "",
       status: "",
       category: "",
-      contributor:""
+      contributor: ""
     },
     edited: false
   };
@@ -41,7 +42,7 @@ class ProjectFilter extends Component {
         name: "",
         status: "",
         category: "",
-        contributor:""
+        constributor: ""
       },
       edited: false
     });
@@ -57,9 +58,11 @@ class ProjectFilter extends Component {
       search,
       edited: true
     });
+
   };
   render() {
     const { search, edited } = this.state;
+    const { users } = this.props
     return (
       <div>
         <form onSubmit={this.handleSearch}>
@@ -99,34 +102,41 @@ class ProjectFilter extends Component {
               m={6}
               xl={6}
             />
-            <Row>
-              <Button
-                type="submit"
-                className={edited ? "gradient-btn btn-blue" : ""}
-                node="button"
-                disabled={!edited}
-                style={{
-                  marginRight: "5px",
-                  bottom: "-20px",
-                  marginBottom: "20px"
-                }}
-              >
-                Search
-              </Button>
-              <Button
-                className="gradient-btn btn-white"
-                node="button"
-                type="reset"
-                style={{
-                  marginRight: "5px",
-                  bottom: "-20px",
-                  marginBottom: "20px"
-                }}
-                onClick={this.handleReset}
-              >
-                Reset
-              </Button>
-            </Row>
+            <ContributorDropDown
+              contributors={users}
+              contributor={search.contributor}
+              handleChangeProject={this.handleChange}
+              s={12}
+              l={6}
+              m={6}
+              xl={6}
+            />
+            <Button
+              type="submit"
+              className={edited ? "gradient-btn btn-blue" : ""}
+              node="button"
+              disabled={!edited}
+              style={{
+                marginRight: "5px",
+                bottom: "-20px",
+                marginBottom: "20px"
+              }}
+            >
+              Search
+            </Button>
+            <Button
+              className="gradient-btn btn-white"
+              node="button"
+              type="reset"
+              style={{
+                marginRight: "5px",
+                bottom: "-20px",
+                marginBottom: "20px"
+              }}
+              onClick={this.handleReset}
+            >
+              Reset
+            </Button>
           </Row>
         </form>
       </div>
