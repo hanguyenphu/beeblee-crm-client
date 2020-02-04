@@ -350,7 +350,7 @@ class Business extends Component {
             <Row style={{ textAlign: "center" }}>
               <Pagination
                 activePage={currentPage}
-                items={businessCount / 5 + 1}
+                items={parseInt(businessCount / 5 + 1)}
                 leftBtn={<Icon>chevron_left</Icon>}
                 maxButtons={3}
                 rightBtn={<Icon>chevron_right</Icon>}
