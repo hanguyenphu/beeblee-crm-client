@@ -54,7 +54,7 @@ class App extends Component {
                       component={admin ? ProjectContributors : NotFound}
                     />
                   )}
-                   {admin && (
+                  {admin && (
                     <Route
                       exact
                       path="/admin/statuses"
@@ -68,13 +68,25 @@ class App extends Component {
                       component={admin ? Category : NotFound}
                     />
                   )}
-                    {admin && (
+                  {admin && (
                     <Route
                       exact
                       path="/admin/provinces"
                       component={admin ? Province : NotFound}
                     />
                   )}
+
+                  <Route
+                    exact
+                    path="/"
+                    render={() => (
+                      loggedIn ? (
+                        <Redirect to="/projects"/>
+                      ) : (
+                        <Redirect to="/login"/>
+                      )
+                    )} />}
+                  />
 
 
                   <Route

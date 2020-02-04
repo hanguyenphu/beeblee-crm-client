@@ -3,13 +3,15 @@ import { connect } from "react-redux";
 import { Row, Table, Icon } from "react-materialize";
 import Loading from "../loading/Loading";
 import { Link } from "react-router-dom";
+import UploadReview from "./UploadReview";
 function mapStateToProps(state) {
   return {};
 }
 
 class UploadTable extends Component {
   state = {
-    uploads: []
+    uploads: [],
+    url:""
   };
   componentDidMount() {
     if (this.props.uploads) {
@@ -19,17 +21,28 @@ class UploadTable extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps ){
-    if(nextProps.uploads.length !== this.props.uploads){
+  openUploadReviewModal = (url) => () => {
+    this.setState({
+      url
+    })
+  }
+
+  closeUploadReviewModal = (e) => {
+    this.setState({
+      url: ""
+    })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.uploads.length !== this.props.uploads) {
       this.setState({
         uploads: nextProps.uploads
-      })
+      });
     }
   }
 
-
   render() {
-    const { uploads } = this.state;
+    const { uploads, url } = this.state;
     return (
       <div>
         <Row>
@@ -50,9 +63,9 @@ class UploadTable extends Component {
                     <td>{upload.description}</td>
                     {/* <td><img src={upload.url} style={{height: "100px"}} /></td> */}
                     <td>
-                      <Link to={"/viewupload/" + upload._id }  >
+                      <a href="#" onClick={this.openUploadReviewModal(upload.url)}>
                         <Icon>launch</Icon>
-                      </Link>
+                      </a>
                     </td>
                     <td>
                       <a href={upload.url}>
@@ -65,6 +78,8 @@ class UploadTable extends Component {
             </tbody>
           </Table>
         </Row>
+
+        {url&& <UploadReview url={url} closeUploadReviewModal={this.closeUploadReviewModal}/>}
       </div>
     );
   }
