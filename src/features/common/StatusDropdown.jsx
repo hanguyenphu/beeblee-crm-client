@@ -49,11 +49,14 @@ class StatusDropdown extends Component {
     return (
       <div>
         <Select
+          label="Choose Status"
           s={12}
           l={6}
           m={6}
           xl={6}
           onChange={this.props.handleChangeProject}
+          type="text"
+
           options={{
             classes: "",
             dropdownOptions: {

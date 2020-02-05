@@ -1,6 +1,5 @@
 @import "assetss/css/animate.css";
 
-
 .App {
   text-align: center;
 }
@@ -40,7 +39,6 @@
   }
 }
 
-
 .example-enter {
   opacity: 0.01;
 }
@@ -58,3 +56,4 @@
   opacity: 0.01;
   transition: opacity 300ms ease-in;
 }
+

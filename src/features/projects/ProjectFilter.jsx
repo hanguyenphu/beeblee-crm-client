@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Row, TextInput } from "react-materialize";
-import Button from "react-materialize/lib/Button";
+import { Row, TextInput, Button } from "react-materialize";
 import StatusDropdown from "../common/StatusDropdown";
 import CategoryDropdown from "../common/CategoryDropdown";
 import API from "../../utils/API/API";
+import 'materialize-css/dist/css/materialize.min.css'
+
+
 function mapStateToProps(state) {
   return {};
 }
@@ -15,7 +17,7 @@ class ProjectFilter extends Component {
       name: "",
       status: "",
       category: "",
-      contributor:""
+      contributor: ""
     },
     edited: false
   };
@@ -34,6 +36,8 @@ class ProjectFilter extends Component {
     //console.log(this.state.search);
   };
 
+
+
   handleReset = e => {
     e.preventDefault();
     this.setState({
@@ -41,7 +45,7 @@ class ProjectFilter extends Component {
         name: "",
         status: "",
         category: "",
-        contributor:""
+        contributor: ""
       },
       edited: false
     });
@@ -58,6 +62,8 @@ class ProjectFilter extends Component {
       edited: true
     });
   };
+
+
   render() {
     const { search, edited } = this.state;
     return (
@@ -82,6 +88,8 @@ class ProjectFilter extends Component {
               m={6}
               xl={6}
             />
+
+
             <StatusDropdown
               handleChangeProject={this.handleChange}
               s={12}
@@ -99,6 +107,10 @@ class ProjectFilter extends Component {
               m={6}
               xl={6}
             />
+
+
+
+
             <Row>
               <Button
                 type="submit"

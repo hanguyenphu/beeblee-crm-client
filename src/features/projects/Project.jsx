@@ -62,7 +62,7 @@ class Project extends Component {
 
     return (
       <div>
-        <Row style={{ marginTop: "20px" }}></Row>
+        <Row style={{ marginTop: "40px" }}></Row>
         <Row>
           <Col>
             <h5><Icon>assignment_turned_in</Icon> All Projects</h5>

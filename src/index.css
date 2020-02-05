@@ -225,3 +225,7 @@ span.active {
 span.inactive {
   background-color: #c7cdcf
 }
+
+textarea.materialize-textarea {
+  height: 150px !important;
+}

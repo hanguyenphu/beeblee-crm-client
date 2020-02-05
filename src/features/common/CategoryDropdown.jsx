@@ -42,6 +42,7 @@ class CategoryDropdown extends Component {
           m={6}
           xl={6}
           onChange={this.props.handleChangeProject}
+
           options={{
             classes: "",
             dropdownOptions: {

@@ -23,6 +23,8 @@ import ProjectContributors from "../features/admin/project/ProjectContributors";
 import Status from "../features/admin/status/Status";
 import Category from "../features/admin/category/Category";
 import Province from "../features/admin/province/Province";
+import { Col, Row } from "react-materialize";
+import NavBar from "./menu/NavBar";
 const mapStateToProps = state => {
   return { user: state.user };
 };
@@ -37,94 +39,99 @@ class App extends Component {
           path="/(.+)"
           render={() => (
             <div>
-              <Nav />
-              <Container className="main">
-                <Switch>
-                  {admin && (
-                    <Route
-                      exact
-                      path="/admin/users"
-                      component={admin ? User : NotFound}
-                    />
-                  )}
-                  {admin && (
-                    <Route
-                      exact
-                      path="/admin/projects"
-                      component={admin ? ProjectContributors : NotFound}
-                    />
-                  )}
-                  {admin && (
-                    <Route
-                      exact
-                      path="/admin/statuses"
-                      component={admin ? Status : NotFound}
-                    />
-                  )}
-                  {admin && (
-                    <Route
-                      exact
-                      path="/admin/categories"
-                      component={admin ? Category : NotFound}
-                    />
-                  )}
-                  {admin && (
-                    <Route
-                      exact
-                      path="/admin/provinces"
-                      component={admin ? Province : NotFound}
-                    />
-                  )}
-                  <Route
-                    exact
-                    path="/projects"
-                    component={loggedIn ? Project : Login}
-                  />
-                  <Route
-                    exact
-                    path="/businesses"
-                    component={loggedIn ? Business : Login}
-                  />
-                  <Route
-                    path="/businesses/:id"
-                    component={loggedIn ? BusinessDetailPage : Login}
-                  />
-                  <Route
-                    path="/projects/:id"
-                    component={loggedIn ? ProjectDetailPage : Login}
-                  />
-                  <Route
-                    exact
-                    path="/contacts"
-                    component={loggedIn ? Contact : Login}
-                  />
-                  <Route
-                    exact
-                    path="/profile/me"
-                    component={loggedIn ? Profile : Login}
-                  />
-                  <Route
-                    exact
-                    path="/login"
-                    component={loggedIn ? Business : Login}
-                  />
-                  <Route
-                    exact
-                    path="/viewupload/:id"
-                    component={loggedIn ? ViewUpload : Login}
-                  />
-                  <Route
-                    exact
-                    path="/notfound"
-                    component={loggedIn ? NotFound : Login}
-                  />
-                  <Route
-                    exact
-                    path="/*"
-                    component={loggedIn ? NotFound : Login}
-                  />
-                </Switch>
-              </Container>
+              <Row>
+                <Nav />
+                <Col s={0} m={0} l={2} xl={2}></Col>
+                <Col s={12} m={12} l={10} xl={10}>
+                  <Container >
+                    <Switch>
+                      {admin && (
+                        <Route
+                          exact
+                          path="/admin/users"
+                          component={admin ? User : NotFound}
+                        />
+                      )}
+                      {admin && (
+                        <Route
+                          exact
+                          path="/admin/projects"
+                          component={admin ? ProjectContributors : NotFound}
+                        />
+                      )}
+                      {admin && (
+                        <Route
+                          exact
+                          path="/admin/statuses"
+                          component={admin ? Status : NotFound}
+                        />
+                      )}
+                      {admin && (
+                        <Route
+                          exact
+                          path="/admin/categories"
+                          component={admin ? Category : NotFound}
+                        />
+                      )}
+                      {admin && (
+                        <Route
+                          exact
+                          path="/admin/provinces"
+                          component={admin ? Province : NotFound}
+                        />
+                      )}
+                      <Route
+                        exact
+                        path="/projects"
+                        component={loggedIn ? Project : Login}
+                      />
+                      <Route
+                        exact
+                        path="/businesses"
+                        component={loggedIn ? Business : Login}
+                      />
+                      <Route
+                        path="/businesses/:id"
+                        component={loggedIn ? BusinessDetailPage : Login}
+                      />
+                      <Route
+                        path="/projects/:id"
+                        component={loggedIn ? ProjectDetailPage : Login}
+                      />
+                      <Route
+                        exact
+                        path="/contacts"
+                        component={loggedIn ? Contact : Login}
+                      />
+                      <Route
+                        exact
+                        path="/profile/me"
+                        component={loggedIn ? Profile : Login}
+                      />
+                      <Route
+                        exact
+                        path="/login"
+                        component={loggedIn ? Business : Login}
+                      />
+                      <Route
+                        exact
+                        path="/viewupload/:id"
+                        component={loggedIn ? ViewUpload : Login}
+                      />
+                      <Route
+                        exact
+                        path="/notfound"
+                        component={loggedIn ? NotFound : Login}
+                      />
+                      <Route
+                        exact
+                        path="/*"
+                        component={loggedIn ? NotFound : Login}
+                      />
+                    </Switch>
+                  </Container>
+                </Col>
+              </Row>
             </div>
           )}
         />

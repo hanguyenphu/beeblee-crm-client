@@ -17,7 +17,7 @@ class Nav extends Component {
             <Navbar
                 alignLinks='left'
                 className="gradient-nav"
-                fixed={true}
+                // fixed={true}
                 brand={
                     <a   className='brand-logo center' href='#'>
                         Beeblee

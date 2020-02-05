@@ -209,7 +209,7 @@ class Business extends Component {
 
     return (
       <div>
-        <Row style={{ marginTop: "20px" }}></Row>
+        <Row style={{ marginTop: "40px" }}></Row>
         <Row>
           <Col>
             <h5>

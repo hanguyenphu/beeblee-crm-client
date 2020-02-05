@@ -50,11 +50,9 @@ class Login extends Component {
         if (response.data) {
           response.data.authenticated = true;
           this.props.authenticate(response.data);
-
         }
       })
       .catch(error => {
-        console.log(error)
         this.setState({
           errorMessage: "Incorrect Email or Password",
           loading: false
