@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { TextInput, Row, Col, Button, Icon } from "react-materialize";
 import Loading from "../loading/Loading";
-import API from "../../utils/API/API";
 import { authenticate } from "../../redux/actions/index";
 import { connect } from "react-redux";
+import API from "../../utils/API/API"
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -34,21 +34,27 @@ class Login extends Component {
     const { email, password } = this.state;
     this.setState({
       ...this.state,
+      loading: false,
       errorMessage: ""
     });
-    API.post(`users/login`, {
+
+    API.post(`/users/login`, {
       email,
       password
     })
       .then(response => {
         response.data.user.authenticated = true;
-        localStorage.setItem("token", response.data.token);
+        const token = response.data.token;
+        localStorage.setItem("token", token);
+        API.defaults.headers.common["Authorization"] = `Bearer ${token}`
         if (response.data) {
           response.data.authenticated = true;
           this.props.authenticate(response.data);
+
         }
       })
       .catch(error => {
+        console.log(error)
         this.setState({
           errorMessage: "Incorrect Email or Password",
           loading: false
@@ -58,7 +64,9 @@ class Login extends Component {
 
   render() {
     const { email, password, loading, errorMessage } = this.state;
-
+    if (loading) {
+      return <Loading />;
+    }
     return (
       <div
         className="radius-corner"

@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, Row } from "react-materialize";
+import { Redirect } from "react-router-dom";
 function mapStateToProps(state) {
   return {};
 }
 
 class NotFound extends Component {
-  goHome = e => {
-    this.props.history.push("/projects");
-  };
   render() {
     return (
       <div>
@@ -27,12 +25,9 @@ class NotFound extends Component {
 
                     <h6>The page you are looking for not avaible!</h6>
 
-                    <Button
-                      onClick={this.goHome}
-                      className="gradient-btn btn-red"
-                    >
-                      Go Home
-                    </Button>
+                    <a href="/projects">
+                      <Button className="gradient-btn btn-red"> Go Home</Button>
+                    </a>
                   </div>
                 </div>
               </div>

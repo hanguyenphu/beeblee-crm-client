@@ -17,7 +17,7 @@ import BusinessModalDetail from "./BusinessModalDetail";
 import API from "../../utils/API/API";
 import formatPhone from "../../utils/commons/FormatPhone";
 import CreateBusinessModal from "./CreateBusinessModal";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const mapStateToProps = state => {
   return { provinces: state.provinces };
@@ -78,16 +78,13 @@ class Business extends Component {
   getData = () => {
     const getProvinceRequest = API.get("provinces");
     const getBusinessRequest = API.get("businesses?pageNo=1");
-    console.log(localStorage.getItem('token'))
     axios
       .all([getProvinceRequest, getBusinessRequest])
       .then(
         axios.spread((...responses) => {
-
           const provinces = responses[0].data;
           const businesses = responses[1].data.businesses;
           const businessCount = responses[1].data.count;
-
           this.setState({
             provinces,
             businesses,
@@ -99,7 +96,9 @@ class Business extends Component {
         })
       )
       .catch(error => {
+        this.props.history.push("/notfound")
         console.log(error);
+
       });
   };
 
@@ -143,7 +142,6 @@ class Business extends Component {
     API.get("/search/businesses")
       .then(response => {
         businesses = response.data;
-
         const fields = Object.keys(this.state.searchBy);
         fields.forEach(field => {
           businesses = this.filterByField(

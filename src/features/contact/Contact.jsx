@@ -11,7 +11,6 @@ class Contact extends Component {
   };
 
   componentDidMount() {
-
     API.get(`contacts`)
       .then(response => {
         this.setState({
