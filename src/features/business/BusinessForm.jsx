@@ -80,6 +80,7 @@ class BusinessForm extends Component {
         loading: false,
         edited: false
       });
+      this.props.closeCreateModal()
     })
     .catch(error => {
       this.setState({

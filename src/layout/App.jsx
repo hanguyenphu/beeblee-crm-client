@@ -43,7 +43,7 @@ class App extends Component {
                 <Nav />
                 <Col s={0} m={0} l={2} xl={2}></Col>
                 <Col s={12} m={12} l={10} xl={10}>
-                  <Container >
+                  <Container className="main">
                     <Switch>
                       {admin && (
                         <Route

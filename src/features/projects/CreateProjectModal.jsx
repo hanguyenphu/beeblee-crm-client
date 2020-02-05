@@ -39,7 +39,7 @@ class CreateProjectModal extends Component {
                 startingTop: "4%"
               }}
             >
-              <ProjectForm business={this.props.business} getBusinessData={this.props.getBusinessData}/>
+              <ProjectForm business={this.props.business} getBusinessData={this.props.getBusinessData} closeCreateProjectModal={this.props.closeCreateProjectModal}/>
             </Modal>
           </div>
         );

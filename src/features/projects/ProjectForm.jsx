@@ -87,6 +87,7 @@ class ProjectForm extends Component {
         errorMessage: ""
       });
       this.props.getBusinessData();
+      this.props.closeCreateProjectModal()
     });
   };
 
