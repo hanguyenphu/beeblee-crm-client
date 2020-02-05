@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { SideNavItem } from "react-materialize";
 import { connect } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 import { logout } from "../../redux/actions/index";
 
@@ -21,25 +22,51 @@ class SideNavItems extends Component {
     this.props.logout();
   };
 
+  defineLocation = () => {
+    let url = window.location.href;
+    if (url.includes("/admin")) {
+      if (url.includes("projects")) {
+        return "admin/projects";
+      } else if (url.includes("users")) {
+        return "admin/users";
+      } else if (url.includes("statuses")) {
+        return "admin/statuses";
+      } else if (url.includes("categories")) {
+        return "admin/categories";
+      } else if (url.includes("provinces")) {
+        return "admin/provinces";
+      }
+    } else if (url.includes("/projects")) {
+      return "projects";
+    } else if (url.includes("/businesses")) {
+      return "businesses";
+    } else if (url.includes("/contacts")) {
+      return "contacts";
+    } else if (url.includes("/profile")) {
+      return "profile";
+    }
+  };
+
   displayAdminMenu = user => {
     if (user.role === "admin") {
+      let location = this.defineLocation()
       return (
         <div>
           <SideNavItem divider />
           <SideNavItem subheader>Admin</SideNavItem>
-          <SideNavItem href="/admin/projects" icon="assignment_turned_in">
+          <SideNavItem href="/admin/projects" icon="assignment_turned_in" className={location === "admin/projects" ? "link-active" :""}>
             Project Contributors
           </SideNavItem>
-          <SideNavItem href="/admin/users" icon="group">
+          <SideNavItem href="/admin/users" icon="group" className={location === "admin/users" ? "link-active" :""}>
             Manage Users
           </SideNavItem>
-          <SideNavItem href="/admin/statuses" icon="star">
+          <SideNavItem href="/admin/statuses" icon="star" className={location === "admin/statuses" ? "link-active" :""}>
             Manage Status
           </SideNavItem>
-          <SideNavItem href="/admin/categories" icon="category">
+          <SideNavItem href="/admin/categories" icon="category" className={location === "admin/categories" ? "link-active" :""}>
             Manage Category
           </SideNavItem>
-          <SideNavItem href="/admin/provinces" icon="museum">
+          <SideNavItem href="/admin/provinces" icon="museum" className={location === "admin/provinces" ? "link-active" :""}>
             Manage Provinces
           </SideNavItem>
         </div>
@@ -49,6 +76,7 @@ class SideNavItems extends Component {
 
   render() {
     const { user } = this.props;
+    let location = this.defineLocation()
 
     return (
       <div>
@@ -64,21 +92,21 @@ class SideNavItems extends Component {
               userView
             />
 
-            <SideNavItem href="/businesses" icon="storefront">
+            <SideNavItem href="/businesses" icon="storefront" className={location === "businesses" ? "link-active" :""}>
               Business
             </SideNavItem>
 
-            <SideNavItem href="/projects" icon="assignment_turned_in">
+            <SideNavItem href="/projects" icon="assignment_turned_in" className={location === "projects" ? "link-active" :""}>
               Projects
             </SideNavItem>
 
-            <SideNavItem href="/contacts" icon="account_box">
+            <SideNavItem href="/contacts" icon="account_box" className={location === "contacts" ? "link-active" :""}>
               Contacts
             </SideNavItem>
             {this.displayAdminMenu(user)}
             <SideNavItem divider />
             <SideNavItem subheader>My Account</SideNavItem>
-            <SideNavItem href="/profile/me" waves icon="person_pin">
+            <SideNavItem href="/profile/me" waves icon="person_pin" className={location === "profile" ? "link-active" :""}>
               Profile
             </SideNavItem>
             <SideNavItem

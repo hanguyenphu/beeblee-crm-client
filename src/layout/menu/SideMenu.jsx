@@ -14,6 +14,7 @@ class SideMenu extends Component {
   }
 
   render() {
+
     return (
       <div>
         <style>
@@ -30,7 +31,7 @@ class SideMenu extends Component {
           options={{
             closeOnClick: true
           }}
-          showOnLarge={true}
+          showonlarge="true"
           trigger={
             <a href="#" >
               <Icon>menu</Icon>

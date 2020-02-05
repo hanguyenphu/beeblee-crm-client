@@ -24,7 +24,7 @@ import Status from "../features/admin/status/Status";
 import Category from "../features/admin/category/Category";
 import Province from "../features/admin/province/Province";
 import { Col, Row } from "react-materialize";
-import NavBar from "./menu/NavBar";
+
 const mapStateToProps = state => {
   return { user: state.user };
 };

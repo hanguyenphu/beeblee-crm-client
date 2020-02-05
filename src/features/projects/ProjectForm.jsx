@@ -142,7 +142,7 @@ class ProjectForm extends Component {
               xl={12}
               label="Description"
               name="description"
-              value={project.description}
+              value={project.description || "- Menu Link: \n\n- Template Link: \n\n- Additional: \n\n "}
               onChange={this.handleChangeProject}
               data-length={200}
             />

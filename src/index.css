@@ -229,3 +229,7 @@ span.inactive {
 textarea.materialize-textarea {
   height: 150px !important;
 }
+
+.link-active {
+  background-color: #b3e5fc
+}
