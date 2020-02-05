@@ -14,14 +14,11 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-
-
 class SideNavItems extends Component {
   handleLogout = e => {
     e.preventDefault();
 
     this.props.logout();
-
   };
 
   displayAdminMenu = user => {
@@ -31,7 +28,7 @@ class SideNavItems extends Component {
           <SideNavItem divider />
           <SideNavItem subheader>Admin</SideNavItem>
           <SideNavItem href="/admin/projects" icon="assignment_turned_in">
-             Project Contributors
+            Project Contributors
           </SideNavItem>
           <SideNavItem href="/admin/users" icon="group">
             Manage Users
@@ -45,7 +42,6 @@ class SideNavItems extends Component {
           <SideNavItem href="/admin/provinces" icon="museum">
             Manage Provinces
           </SideNavItem>
-
         </div>
       );
     }
@@ -67,12 +63,15 @@ class SideNavItems extends Component {
               }}
               userView
             />
-            <SideNavItem href="/projects" icon="assignment_turned_in">
-              Projects
-            </SideNavItem>
+
             <SideNavItem href="/businesses" icon="storefront">
               Business
             </SideNavItem>
+
+            <SideNavItem href="/projects" icon="assignment_turned_in">
+              Projects
+            </SideNavItem>
+
             <SideNavItem href="/contacts" icon="account_box">
               Contacts
             </SideNavItem>
