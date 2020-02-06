@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Row, Col, Preloader } from "react-materialize";
 class Loading extends Component {
   render() {
     return (

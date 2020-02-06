@@ -227,9 +227,11 @@ span.inactive {
 }
 
 textarea.materialize-textarea {
-  height: 150px !important;
+  height: 200px !important;
+  overflow-y: scroll !important;
 }
 
 .link-active {
   background-color: #b3e5fc
 }
+

@@ -98,7 +98,7 @@ class CreateBusinessModal extends Component {
             startingTop: "4%"
           }}
         >
-          <BusinessForm updateData={this.props.updateData} closeCreateModal={this.props.closeCreateModal}/>
+          <BusinessForm updateData={this.props.updateData} closeCreateModal={this.props.closeCreateModal} />
         </Modal>
       </div>
     );
