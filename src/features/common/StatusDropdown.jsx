@@ -77,7 +77,7 @@ class StatusDropdown extends Component {
           }}
           value={this.props.status? this.props.status._id: ""}
           name="status"
-
+          required={this.props.required? true: false}
         >
           <option disabled value="">
             Choose status

@@ -71,7 +71,6 @@ class ProjectForm extends Component {
     }
     if (this.props.project) {
       project = this.props.project;
-      project.price = project.price.$numberDecimal;
       this.setState({
         ...this.state,
         project
@@ -80,6 +79,7 @@ class ProjectForm extends Component {
   }
 
   createProject = project => {
+    console.log(project)
     API.post("/projects", project).then(response => {
       this.setState({
         edited: false,
@@ -88,16 +88,27 @@ class ProjectForm extends Component {
       });
       this.props.getBusinessData();
       this.props.closeCreateProjectModal()
+    }).catch(error => {
+      this.setState({
+        edited: false,
+        successMessage: "",
+        errorMessage: "An Error has been occurred"
+      });
     });
   };
 
   updateProject = project => {
     API.patch(`/projects/${project._id}`, project).then(response => {
-
       this.setState({
         edited: false,
         successMessage: "Saved successfully!",
         errorMessage: ""
+      });
+    }).catch(error => {
+      this.setState({
+        edited: false,
+        successMessage: "",
+        errorMessage: "An Error has been occurred"
       });
     });
   }
@@ -149,10 +160,12 @@ class ProjectForm extends Component {
             <StatusDropdown
               handleChangeProject={this.handleChangeProject}
               status={project.status}
+              required={true}
             />
             <CategoryDropdown
               handleChangeProject={this.handleChangeProject}
               category={project.category}
+              required={true}
             />
 
             <TextInput

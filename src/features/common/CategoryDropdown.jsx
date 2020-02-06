@@ -63,6 +63,7 @@ class CategoryDropdown extends Component {
           }}
           value={this.props.category? this.props.category._id: ""}
           name="category"
+          required={this.props.required? true: false}
         >
           <option disabled value="">
             Choose category

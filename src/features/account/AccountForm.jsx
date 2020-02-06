@@ -23,9 +23,9 @@ class AccountForm extends Component {
   componentDidMount() {
     if (this.props.account) {
       let account = this.props.account;
-      if (account.price.$numberDecimal) {
-        account.price = account.price.$numberDecimal;
-      }
+      // if (account.price.$numberDecimal) {
+      //   account.price = account.price.$numberDecimal;
+      // }
 
       this.setState({
         ...this.state,

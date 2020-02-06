@@ -55,7 +55,7 @@ class ProjectTable extends Component {
           <td>
             <a href={"/projects/" + project._id}>{project.name}</a>
           </td>
-          <td>{project.price.$numberDecimal}</td>
+          <td>{project.price}</td>
           <td>
            {status && <p style={{ color: `${status.color}` }}>{status.title}</p>}
           </td>
@@ -79,9 +79,9 @@ class ProjectTable extends Component {
           <tr>
             <th data-field="id">Project Name</th>
             <th data-field="name">Price</th>
-            <th data-field="price">Status</th>
-            <th data-field="price">Start Date</th>
-            <th data-field="price">Completed Date</th>
+            <th data-field="status">Status</th>
+            <th data-field="startDate">Start Date</th>
+            <th data-field="completedDate">Completed Date</th>
           </tr>
         </thead>
         <tbody>

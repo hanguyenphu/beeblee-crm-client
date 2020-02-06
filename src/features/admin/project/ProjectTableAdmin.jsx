@@ -92,7 +92,7 @@ class ProjectTableAdmin extends Component {
           <td>
             <a href={"/projects/" + project._id}>{project.name}</a>
           </td>
-          <td>{project.price.$numberDecimal}</td>
+          <td>{project.price}</td>
           <td>
             {status && (
               <p style={{ color: `${status.color}` }}>{status.title}</p>
