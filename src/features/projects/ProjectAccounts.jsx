@@ -24,7 +24,7 @@ class ProjectAccounts extends Component {
               <CollapsibleItem
                 expanded={false}
                 header={account.domain}
-                icon={<Icon>email</Icon>}
+                icon={<Icon>vpn_key</Icon>}
                 node="div"
                 key={account._id}
               >
