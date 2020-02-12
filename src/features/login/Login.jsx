@@ -53,6 +53,7 @@ class Login extends Component {
         }
       })
       .catch(error => {
+        console.log(error)
         this.setState({
           errorMessage: "Incorrect Email or Password",
           loading: false

@@ -79,7 +79,6 @@ class ProjectForm extends Component {
   }
 
   createProject = project => {
-    console.log(project)
     API.post("/projects", project).then(response => {
       this.setState({
         edited: false,
