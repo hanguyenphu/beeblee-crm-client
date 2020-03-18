@@ -180,7 +180,7 @@ class BusinessForm extends Component {
               return (
                 <Row className="animated shake" key={business._id}>
                   <a href={href} target="_blank">
-                    {business.name}
+                    {business.name} - {business.phone} - {business.address}
                   </a>
                 </Row>
               );
