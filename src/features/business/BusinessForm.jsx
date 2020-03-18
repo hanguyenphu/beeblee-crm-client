@@ -18,7 +18,8 @@ class BusinessForm extends Component {
     business: { name: "", address: "", phone: "", province: "" },
     edited: false,
     successMessage: "",
-    errorMessage:""
+    errorMessage: "",
+    duplicatedBusinesses: []
   };
 
   componentDidMount() {
@@ -47,21 +48,24 @@ class BusinessForm extends Component {
 
   //Create a business
   //Will be called when _id property of business is not present
-  createBusinessAPI = (business) => {
+  createBusinessAPI = business => {
     API.post(`businesses`, business)
-    .then(response => {
+      .then(response => {
         this.props.updateData();
         this.props.closeCreateModal();
-
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  }
+      })
+      .catch(error => {
+        if (error.response) {
+          this.setState({
+            duplicatedBusinesses: error.response.data
+          });
+        }
+      });
+  };
 
   //Update business API
   //Will be called when business has _id property
-  updateBusinessAPI = (business) => {
+  updateBusinessAPI = business => {
     const _id = business._id;
     const updateBusiness = {
       name: business.name,
@@ -70,28 +74,28 @@ class BusinessForm extends Component {
       province: business.province
     };
     API.patch(`businesses/${_id}`, updateBusiness)
-    .then(response => {
-      //Update the data in the parent component
-      this.props.updateData();
-      this.setState({
-        ...this.state,
-        successMessage: "Save successfully!",
-        errorMessage: "",
-        loading: false,
-        edited: false
+      .then(response => {
+        //Update the data in the parent component
+        this.props.updateData();
+        this.setState({
+          ...this.state,
+          successMessage: "Save successfully!",
+          errorMessage: "",
+          loading: false,
+          edited: false
+        });
+        this.props.closeCreateModal();
+      })
+      .catch(error => {
+        this.setState({
+          ...this.state,
+          successMessage: "",
+          errorMessage: "Cannot save the data!",
+          loading: false,
+          edited: false
+        });
       });
-      this.props.closeCreateModal()
-    })
-    .catch(error => {
-      this.setState({
-        ...this.state,
-        successMessage:"",
-        errorMessage: "Cannot save the data!",
-        loading: false,
-        edited: false
-      });
-    });
-  }
+  };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -102,17 +106,17 @@ class BusinessForm extends Component {
       errorMessage: "",
       loading: true,
       edited: false
-    })
+    });
     //Check _id propery to decide to create or update
     if (!business._id) {
-      this.createBusinessAPI(business)
+      this.createBusinessAPI(business);
     } else {
-      this.updateBusinessAPI(business)
+      this.updateBusinessAPI(business);
     }
   };
 
   render() {
-    const { business, edited } = this.state;
+    const { business, edited, duplicatedBusinesses } = this.state;
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -166,6 +170,23 @@ class BusinessForm extends Component {
             </Button>
           </Row>
         </form>
+        {duplicatedBusinesses.length > 0 && (
+          <Row>
+            <p className="red-text animated bounceInLeft ">
+              Duplicated Business Found!
+            </p>
+            {duplicatedBusinesses.map(business => {
+              const href = `/businesses/${business._id}`;
+              return (
+                <Row className="animated shake" key={business._id}>
+                  <a href={href} target="_blank">
+                    {business.name}
+                  </a>
+                </Row>
+              );
+            })}
+          </Row>
+        )}
         <Row>
           {this.state.successMessage && (
             <Row className="animated shake">
